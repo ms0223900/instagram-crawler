@@ -2,9 +2,11 @@
 .DS_Store
 .vscode/
 
+
 test.py
 build/
 dist/
+venv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

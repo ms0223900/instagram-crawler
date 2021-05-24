@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import argparse
 import json
 import sys
+from datetime import datetime
 from io import open
 
 from inscrawler import InsCrawler
@@ -49,10 +50,18 @@ def arg_required(args, fields=[]):
             parser.print_help()
             sys.exit()
 
+def create_new_date_tag_output(dumped_data):
+    file_name = 'ig-crawled-output-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + '.json'
+    f = open(file_name, 'w+')
+    f.write(dumped_data)
+    f.close()
 
 def output(data, filepath):
     out = json.dumps(data, ensure_ascii=False)
-    if filepath:
+    if filepath == "default":
+        create_new_date_tag_output(out)
+        return
+    elif filepath:
         with open(filepath, "w", encoding="utf8") as f:
             f.write(out)
     else:

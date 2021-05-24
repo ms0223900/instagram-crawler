@@ -199,21 +199,21 @@ class InsCrawler(Logging):
         cur_key = None
 
         all_posts = self._get_posts(num)
-        i = 1
+        i = 0
 
         # Fetching all posts
-        for _ in range(num):
+        for _ in all_posts:
             dict_post = {}
 
             # Fetching post detail
             try:
-                if(i < num):
-                    check_next_post(all_posts[i]['key'])
-                    i = i + 1
-
+                post_key = all_posts[i]['key']
+                # print('post_key', post_key)
                 # Fetching datetime and url as key
-                ele_a_datetime = browser.find_one(".eo2As .c-Yi7")
-                cur_key = ele_a_datetime.get_attribute("href")
+                browser.get(post_key)
+                # ele_a_datetime = browser.find_one(".eo2As .c-Yi7")
+                # cur_key = ele_a_datetime.get_attribute("href")
+                cur_key = post_key
                 dict_post["key"] = cur_key
                 fetch_datetime(browser, dict_post)
                 fetch_imgs(browser, dict_post)
@@ -221,6 +221,10 @@ class InsCrawler(Logging):
                 fetch_likers(browser, dict_post)
                 fetch_caption(browser, dict_post)
                 fetch_comments(browser, dict_post)
+
+                if(i < num):
+                    # check_next_post(post_key)
+                    i = i + 1
 
             except RetryException:
                 sys.stderr.write(
@@ -312,4 +316,5 @@ class InsCrawler(Logging):
 
         pbar.close()
         print("Done. Fetched %s posts." % (min(len(posts), num)))
+        print('posts', posts[:num])
         return posts[:num]
