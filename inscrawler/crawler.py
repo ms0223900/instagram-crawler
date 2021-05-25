@@ -93,6 +93,9 @@ class InsCrawler(Logging):
 
         check_login()
 
+    def make_userpage_url(self, username):
+        return "%s/%s/" % (InsCrawler.URL, username)
+
     def get_user_profile(self, username):
         browser = self.browser
         url = "%s/%s/" % (InsCrawler.URL, username)
@@ -207,6 +210,7 @@ class InsCrawler(Logging):
 
             # Fetching post detail
             try:
+                # post_key is post's url
                 post_key = all_posts[i]['key']
                 # print('post_key', post_key)
                 # Fetching datetime and url as key
@@ -248,7 +252,7 @@ class InsCrawler(Logging):
 
             self.log(json.dumps(dict_post, ensure_ascii=False))
             dict_posts[browser.current_url] = dict_post
-
+                    
             pbar.update(1)
 
         pbar.close()
@@ -316,5 +320,87 @@ class InsCrawler(Logging):
 
         pbar.close()
         print("Done. Fetched %s posts." % (min(len(posts), num)))
-        print('posts', posts[:num])
+        # print('posts', posts[:num])
         return posts[:num]
+
+    def get_user_stories(self, username, num=100):
+        browser = self.browser
+        url = self.make_userpage_url(username)
+        browser.get(url)
+        story_buttons = browser.find(".aoVrC.D1yaK")
+        story_buttons_length = len(story_buttons)
+        all_stories = []
+
+        if story_buttons:
+            # 點進限時動態頁面
+            story_buttons[0].click()
+            sleep(2)
+            # 找目前呈現在頁面的，所有限時動態元素(小的縮圖那個)
+            # 可能有2, 3, 4 個
+            all_stories_now = browser.find(".jVLDv")
+            # for _ in range(3): # 先測3個
+            for i in range(story_buttons_length):
+                if i == num:
+                    break
+
+                story_data = {}
+                # 現在的限時動態
+                # story_el_now = browser.find_one(".Cd8X1")
+                
+                # 抓連結
+                # 連結按鈕
+                see_more_button = browser.find_one('.scRau')
+                url = ''
+                # 取得連結
+                if see_more_button:
+                    see_more_button.click()
+                    sleep(0.5)
+                    # 切到下一個tab
+                    browser.switch_to_tab(1)
+                    url = browser.current_url
+                    browser.close_current_tab()
+                story_data['story_url'] = url
+                sleep(0.5)
+
+                # 抓圖片
+                story_img = browser.find_one("img.y-yJ5")
+                story_data['img_src'] = story_img.get_attribute("srcset")
+                all_stories.append(story_data)
+                # 更新目前的限時動態元素
+                all_stories_now = browser.find(".jVLDv")
+                all_stories_now_length = len(all_stories_now)
+                # print('all_stories_now_length: ', all_stories_now_length)
+                next_story_el = None
+                # 抓標題
+                caption = browser.find_one(".FPmhX.notranslate._1PU_r")
+                story_data['caption'] = caption.text
+                # 找下一個限時動態
+                if i == 0:
+                    next_story_el = all_stories_now[0]
+                elif i == 1:
+                    if all_stories_now_length > 1:
+                        next_story_el = all_stories_now[1]
+                elif i == 2:
+                    if all_stories_now_length > 2:
+                        next_story_el = all_stories_now[2]
+                else:
+                    if all_stories_now_length <= 3:
+                        next_story_el = all_stories_now[2]
+                    else:
+                        next_story_el = all_stories_now[3]
+                # elif i == story_buttons_length - 2:
+                #     next_story_el = all_stories_now[3]
+                # else:
+                #     if all_stories_now_length == 5 or all_stories_now_length == 6:
+                #         next_story_el = all_stories_now[3]
+                #     else:
+                #         print(i)
+                #         next_story_el = all_stories_now[2]
+                # 點擊下個限時動態
+                print('%s stories finished.' % str(i + 1))
+                if next_story_el:
+                    next_story_el.click()
+                    randmized_sleep(1)
+
+        print('Stories fetched completed.')
+        return all_stories

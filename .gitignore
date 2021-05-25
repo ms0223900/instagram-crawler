@@ -7,6 +7,7 @@ test.py
 build/
 dist/
 venv/
+outputs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -87,6 +87,11 @@ class Browser:
     def js_click(self, elem):
         self.driver.execute_script("arguments[0].click();", elem)
 
+    def switch_to_tab(self, tab=0):
+        _tab = self.driver.window_handles[tab]
+        if _tab:
+            self.driver.switch_to.window(_tab)
+
     def open_new_tab(self, url):
         self.driver.execute_script("window.open('%s');" %url)
         self.driver.switch_to.window(self.driver.window_handles[1])

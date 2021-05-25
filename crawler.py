@@ -23,6 +23,9 @@ def usage():
         The default number for fetching posts via hashtag is 100.
     """
 
+def get_stories_by_user(username, number):
+    ins_crawler = InsCrawler(has_screen=False)
+    return ins_crawler.get_user_stories(username, number)
 
 def get_posts_by_user(username, number, detail, debug):
     ins_crawler = InsCrawler(has_screen=debug)
@@ -51,7 +54,7 @@ def arg_required(args, fields=[]):
             sys.exit()
 
 def create_new_date_tag_output(dumped_data):
-    file_name = 'ig-crawled-output-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + '.json'
+    file_name = './outputs/' + 'ig-crawled-output-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + '.json'
     f = open(file_name, 'w+')
     f.write(dumped_data)
     f.close()
@@ -71,7 +74,7 @@ def output(data, filepath):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Instagram Crawler", usage=usage())
     parser.add_argument(
-        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag]"
+        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag, stories]"
     )
     parser.add_argument("-n", "--number", type=int, help="number of returned posts")
     parser.add_argument("-u", "--username", help="instagram's username")
@@ -103,6 +106,12 @@ if __name__ == "__main__":
         arg_required("tag")
         output(
             get_posts_by_hashtag(args.tag, args.number or 100, args.debug), args.output
+        )
+    elif args.mode == "stories":
+        arg_required("username")
+        output(
+            get_stories_by_user(args.username, args.number),
+            args.output
         )
     else:
         usage()
