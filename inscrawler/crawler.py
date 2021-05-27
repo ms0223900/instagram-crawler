@@ -8,7 +8,7 @@ import sys
 import time
 import traceback
 from builtins import open
-from time import sleep
+from time import sleep, time_ns
 
 from tqdm import tqdm
 
@@ -25,6 +25,7 @@ from .fetch import fetch_details
 from .utils import instagram_int
 from .utils import randmized_sleep
 from .utils import retry
+from inscrawler import browser
 
 
 class Logging(object):
@@ -323,20 +324,17 @@ class InsCrawler(Logging):
         # print('posts', posts[:num])
         return posts[:num]
 
-    def get_user_stories(self, username, num=100):
+    def get_stories(self, story_buttons=[], num=100):
         browser = self.browser
-        url = self.make_userpage_url(username)
-        browser.get(url)
-        story_buttons = browser.find(".aoVrC.D1yaK")
         story_buttons_length = len(story_buttons)
         all_stories = []
 
         if story_buttons:
             # 點進限時動態頁面
             story_buttons[0].click()
-            sleep(2)
+            sleep(0.5)
+
             # 找目前呈現在頁面的，所有限時動態元素(小的縮圖那個)
-            # 可能有2, 3, 4 個
             all_stories_now = browser.find(".jVLDv")
             # for _ in range(3): # 先測3個
             for i in range(story_buttons_length):
@@ -344,8 +342,11 @@ class InsCrawler(Logging):
                     break
 
                 story_data = {}
-                # 現在的限時動態
-                # story_el_now = browser.find_one(".Cd8X1")
+
+                # 先暫停限時動態的輪播
+                play_pause_btn = browser.find_one("button.wpO6b")
+                if play_pause_btn:
+                    play_pause_btn.click()
                 
                 # 抓連結
                 # 連結按鈕
@@ -362,18 +363,29 @@ class InsCrawler(Logging):
                 story_data['story_url'] = url
                 sleep(0.5)
 
+                # 抓時間
+                time_el = browser.find_one("time.BPyeS.Nzb55")
+                if time_el:
+                    datetime = time_el.get_attribute("datetime")
+                    story_data['datetime'] = datetime
+
                 # 抓圖片
                 story_img = browser.find_one("img.y-yJ5")
-                story_data['img_src'] = story_img.get_attribute("srcset")
+                if story_img:
+                    story_data['img_src'] = story_img.get_attribute("srcset")
+                
                 all_stories.append(story_data)
+
                 # 更新目前的限時動態元素
                 all_stories_now = browser.find(".jVLDv")
                 all_stories_now_length = len(all_stories_now)
                 # print('all_stories_now_length: ', all_stories_now_length)
                 next_story_el = None
+
                 # 抓標題
                 caption = browser.find_one(".FPmhX.notranslate._1PU_r")
                 story_data['caption'] = caption.text
+
                 # 找下一個限時動態
                 if i == 0:
                     next_story_el = all_stories_now[0]
@@ -388,19 +400,29 @@ class InsCrawler(Logging):
                         next_story_el = all_stories_now[2]
                     else:
                         next_story_el = all_stories_now[3]
-                # elif i == story_buttons_length - 2:
-                #     next_story_el = all_stories_now[3]
-                # else:
-                #     if all_stories_now_length == 5 or all_stories_now_length == 6:
-                #         next_story_el = all_stories_now[3]
-                #     else:
-                #         print(i)
-                #         next_story_el = all_stories_now[2]
+                        
                 # 點擊下個限時動態
                 print('%s stories finished.' % str(i + 1))
                 if next_story_el:
                     next_story_el.click()
-                    randmized_sleep(1)
+                    randmized_sleep(0.5)
 
         print('Stories fetched completed.')
-        return all_stories
+        return all_stories 
+
+    def get_user_story_highlights(self, username, num=100):
+        browser = self.browser
+        url = self.make_userpage_url(username)
+        browser.get(url)
+        story_buttons = browser.find(".aoVrC.D1yaK")
+        return self.get_stories(story_buttons, num)
+    
+    # 取得首頁的所有限時動態
+    def get_all_stories(self, num=100):
+        browser = self.browser
+        browser.get('https://www.instagram.com/')
+        see_later_btn = browser.find_one("button.aOOlW.HoLwm")
+        if see_later_btn:
+            see_later_btn.click()
+        story_buttons = browser.find(".OE3OK")
+        return self.get_stories(story_buttons, num)

@@ -23,9 +23,13 @@ def usage():
         The default number for fetching posts via hashtag is 100.
     """
 
-def get_stories_by_user(username, number):
+def get_story_highlights_by_user(username, number):
     ins_crawler = InsCrawler(has_screen=False)
-    return ins_crawler.get_user_stories(username, number)
+    return ins_crawler.get_user_story_highlights(username, number)
+
+def get_stories(number):
+    ins_crawler = InsCrawler(has_screen=False)
+    return ins_crawler.get_all_stories(number)
 
 def get_posts_by_user(username, number, detail, debug):
     ins_crawler = InsCrawler(has_screen=debug)
@@ -74,7 +78,7 @@ def output(data, filepath):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Instagram Crawler", usage=usage())
     parser.add_argument(
-        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag, stories]"
+        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag, story_highlights, stories]"
     )
     parser.add_argument("-n", "--number", type=int, help="number of returned posts")
     parser.add_argument("-u", "--username", help="instagram's username")
@@ -107,10 +111,15 @@ if __name__ == "__main__":
         output(
             get_posts_by_hashtag(args.tag, args.number or 100, args.debug), args.output
         )
-    elif args.mode == "stories":
+    elif args.mode == "story_highlights":
         arg_required("username")
         output(
-            get_stories_by_user(args.username, args.number),
+            get_story_highlights_by_user(args.username, args.number),
+            args.output
+        )
+    elif args.mode == "stories":
+        output(
+            get_stories(args.number),
             args.output
         )
     else:
