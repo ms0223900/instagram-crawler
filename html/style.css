@@ -1,0 +1,13 @@
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.ig-story-wrapper {
+  /* display: flex; */
+  padding: 4px;
+}
+.ig-story-wrapper img {
+  display: block;
+  max-width: 300px;
+}

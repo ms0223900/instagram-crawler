@@ -372,7 +372,9 @@ class InsCrawler(Logging):
                 # 抓圖片
                 story_img = browser.find_one("img.y-yJ5")
                 if story_img:
-                    story_data['img_src'] = story_img.get_attribute("srcset")
+                    srcset = story_img.get_attribute("srcset")
+                    src = story_img.get_attribute("src")
+                    story_data['img_src'] = src or srcset;
                 
                 all_stories.append(story_data)
 
