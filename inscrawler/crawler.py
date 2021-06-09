@@ -428,3 +428,44 @@ class InsCrawler(Logging):
             see_later_btn.click()
         story_buttons = browser.find(".OE3OK")
         return self.get_stories(story_buttons, num)
+
+class FbCrawler(InsCrawler):
+    FAN_PAGE_URLS = [
+        'https://www.facebook.com/mumumamagogo',
+        'https://www.facebook.com/thelinskids',
+        'https://www.facebook.com/angelsparadiseYAYAYA',
+    ]
+
+    def login(self):
+        browser = self.browser
+        login_url = 'https://www.facebook.com/login'
+        browser.get(login_url)
+
+        input_username = browser.find('input[name="email"]')
+        input_username.send_keys(secret.fb_username)
+        input_password = browser.find('input[name="pass"]')
+        input_password.send_keys(secret.fb_password)
+
+        button_login = browser.find_one('#loginbutton')
+        button_login.click()
+
+        @retry()
+        def check_login():
+            if browser.find_one('input[name="email"]'):
+                raise RetryException()
+        check_login()
+
+    def get_single_post(self, post_link=''):
+        browser = self.browser
+        post_content_el = browser.find('div[data-testid="post_message"]')
+        post_content = post_content_el.innerText if post_content_el else ''
+        post_link_els = browser.find('a[rel="nofollow"]', post_content_el)
+        post_links_hrefs = list(map(lambda el: el.href, post_link_els))
+        print(post_content, post_links_hrefs)
+        
+    def get_single_fanpage_posts(self):
+        
+        post_link_els = browser.find("a.oajrlxb2.g5ia77u1.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.rq0escxv.nhd2j8a9.nc684nl6.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.hcukyx3x.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.i1ao9s8h.esuyzwwr.f1sip0of.lzcic4wl.gmql0nx0.gpro0wi8.b1v8xokw")
+
+    def get_fanpages_posts(self):
+        return {}

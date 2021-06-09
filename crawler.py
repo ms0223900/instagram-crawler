@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import argparse
+from inscrawler.crawler import FbCrawler
 import json
 import sys
 from datetime import datetime
@@ -58,8 +59,9 @@ def arg_required(args, fields=[]):
             sys.exit()
 
 def create_new_date_tag_output(dumped_data):
-    file_name = './outputs/' + 'ig-crawled-output-' + datetime.today().strftime('%Y-%m-%d-%H:%M:%S') + '.json'
-    f = open(file_name, 'w+')
+    json_file_name = 'ig-crawled-output-' + datetime.today().strftime('%Y-%m-%d-%H-%M-%S') + '.json'
+    folder = './outputs/'
+    f = open(folder + json_file_name, 'w+')
     f.write(dumped_data)
     f.close()
 
@@ -73,6 +75,12 @@ def output(data, filepath):
             f.write(out)
     else:
         print(out)
+
+
+# fb functions
+def get_fanpage_posts():
+    fb_crawler = FbCrawler(has_screen=False)
+    
 
 
 if __name__ == "__main__":
@@ -121,6 +129,12 @@ if __name__ == "__main__":
         output(
             get_stories(args.number),
             args.output
+        )
+
+    # fb
+    elif args.mode == 'fb_fanpage_posts':
+        output(
+
         )
     else:
         usage()
