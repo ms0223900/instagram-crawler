@@ -443,15 +443,39 @@ class FbCrawler():
     def __init__(self, has_screen=False):
         super(FbCrawler, self).__init__()
 
-    def get_post_by_request(self, cursor=None):
-        variables = '{"UFI2CommentsProvider_commentsKey":"ProfileCometTimelineRoute","afterTime":null,"beforeTime":null,"count":3,"cursor": %s,"displayCommentsContextEnableComment":null,"displayCommentsContextIsAdPreview":null,"displayCommentsContextIsAggregatedShare":null,"displayCommentsContextIsStorySet":null,"displayCommentsFeedbackContext":null,"feedLocation":"TIMELINE","feedbackSource":0,"focusCommentID":null,"memorializedSplitTimeFilter":null,"omitPinnedPost":true,"postedBy":null,"privacy":null,"privacySelectorRenderLocation":"COMET_STREAM","renderLocation":"timeline","scale":1.5,"should_show_profile_pinned_post":true,"stream_count":1,"taggedInOnly":null,"useDefaultActor":false,"id":"100050607693965"}' % cursor
-        res = requests.post(FbCrawler.GRAPHQL_API, data={
-            'variables': variables,
-            'doc_id': 4068333413258967,
-        })
-        if res.status_code == requests.codes.ok:
-            print(res.json())
-            # json.loads()
+    def get_post_by_request(self, cursor='', doc_id=4076462995767329):
+        try:   
+            variables = '{"UFI2CommentsProvider_commentsKey":"ProfileCometTimelineRoute","afterTime":null,"beforeTime":null,"count":3,"cursor": %s,"displayCommentsContextEnableComment":null,"displayCommentsContextIsAdPreview":null,"displayCommentsContextIsAggregatedShare":null,"displayCommentsContextIsStorySet":null,"displayCommentsFeedbackContext":null,"feedLocation":"TIMELINE","feedbackSource":0,"focusCommentID":null,"memorializedSplitTimeFilter":null,"omitPinnedPost":true,"postedBy":null,"privacy":null,"privacySelectorRenderLocation":"COMET_STREAM","renderLocation":"timeline","scale":1.5,"should_show_profile_pinned_post":true,"stream_count":1,"taggedInOnly":null,"useDefaultActor":false,"id":"100050607693965"}' % (cursor)
+
+            request_body_data = "variables={}&doc_id={}&av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKi8wGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7u2am1AyES&__csr=gvl3c478TsbinfOW6NIrdkySDO9tiYBb6lFmyidlAiJQXOA_IOhnh5IB7QQQQXhGGVquDCWLKUFq-yfKFepbGJdamQCDjAHnVqy8OlLAV5AWCjKhUx6ymh93aGqml6yaCAGVWVF9kbVd5xymFWiiKiF8O-nCUGi-59kV8Z3VGGUixe8GfCK8AxiaBK-FbqGuazE-5bxa5WBByGKmbU8Ve46EtwMxCay88oGqK22FUzmuU-48hAzryp8gyXG58C2aieyEjAx2fzogxudAG78bUG4Ft12ewBy9oeZwOxxzEC6ppazU5W6ubyEyi68eoc8K7p43aaypo9omDwjocUO7orG0yU0Laag0ocwdfwlo1YE1wF40iq02Pa0eBw75c0iJxqIi2W680Ce2Kbw8-0p-0Xm5UIAk05682uo0ep81b8EJ02A84J0&__req=s&__hs=18799.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004003765&__s=e0kt02%3Anddru1%3Afljobc&__hsi=6976182287695837750-0&__comet_req=1&fb_dtsg=AQHHc-zdSqlQ9fA%3AAQFdRQ5vyaghigU&jazoest=22691&lsd=LU1nCL2OApkaX9w1DoBQY-&__spin_r=1004003765&__spin_b=trunk&__spin_t=1624269012&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&server_timestamps=true".format(variables, doc_id)
+
+            print(request_body_data)
+            # res = requests.post(FbCrawler.GRAPHQL_API, data=request_body_data)
+            # print(res)
+            # if res.status_code == requests.codes.ok:
+            #     print(res.text)
+            #     return res.text
+        except requests.exceptions.RequestException as e:  
+            # This is the correct syntax
+            raise SystemExit(e)
+
+    def parseStoryData(self, dataText=''):
+        try:
+            devided = dataText.split('\n')
+            allParsed = map(lambda d: json.loads(d), devided)
+            parsedPostData = allParsed[0]
+            otherPosts = filter(lambda a: a.label == 'ProfileCometTimelineFeed_user$stream$ProfileCometTimelineFeed_user_timeline_list_feed_units', allParsed)
+            pageInfo = filter(lambda a: a.label == 'ProfileCometTimelineFeed_user$defer$ProfileCometTimelineFeed_user_timeline_list_feed_units$page_info', allParsed)
+
+            return ({
+                'parsedPostData': parsedPostData,
+                'otherPosts': otherPosts,
+                'pageInfo': pageInfo,
+                'allParsed': allParsed,
+            })
+        except Exception:
+            print(sys.exc_info()[0])
+            return None
 
     def login(self):
         return True
@@ -500,13 +524,27 @@ class FbCrawler():
             post_link_url = post_link_urls[i]
             self.get_single_post(post_link_url)
 
-    def get_fanpages_posts(self):
-        self.get_posts_by_request()
-        data_regexp = r"\{[\'|\"]\w+[\'|\"]\:[\'|\"]\w+?[\'|\"]\}"
-        res_data_str = '{"data":{"abc":"cccc"},{"abc":"kkk"}}'
-        matched = re.findall(data_regexp, res_data_str)
-        print(matched)
-        print(json.loads(matched[0]))
+    def get_fanpages_posts(self, postsAmount=5):
+        cursor = None
+        i = 0
+        fetchedPosts = []
+        try:
+            while (i < postsAmount):
+                res = self.get_post_by_request(cursor, 4076462995767329)
+                if not res:
+                    break
+                print('%s posts fetched' % i + 1)
+                parsed = self.parseStoryData(res)
+                fetchedPosts.append(parsed.parsedPostData)
+                fetchedPosts.extend(parsed.otherPosts)
+                cursor = parsed.pageInfo.data.page_info.end_cursor
+                i = i + 1
+            pass
+        except requests.exceptions.RequestException as e:  
+            # This is the correct syntax
+            raise SystemExit(e)
+        
+        print(fetchedPosts)
         # for i in range(len(FbCrawler.FAN_PAGE_URLS)):
         #     fanpage_url = FbCrawler.FAN_PAGE_URLS[i]
         #     self.get_single_fanpage_posts(fanpage_url)
