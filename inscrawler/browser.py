@@ -28,6 +28,8 @@ class Browser:
             service_args=service_args,
             chrome_options=chrome_options,
         )
+        # self.driver.set_window_position(0, 0)
+        self.driver.set_window_size(1440, 1000)
         self.driver.implicitly_wait(5)
 
     @property

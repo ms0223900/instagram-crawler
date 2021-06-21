@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import argparse
-from inscrawler.crawler import FbCrawler
+# from inscrawler import FbCrawler
 import json
 import sys
 from datetime import datetime
 from io import open
 
 from inscrawler import InsCrawler
+from inscrawler import FbCrawler
 from inscrawler.settings import override_settings
 from inscrawler.settings import prepare_override_settings
 
@@ -79,14 +79,15 @@ def output(data, filepath):
 
 # fb functions
 def get_fanpage_posts():
-    fb_crawler = FbCrawler(has_screen=False)
-    
+    fb_crawler = FbCrawler(has_screen=True)
+    fb_crawler.get_fanpages_posts()
+    pass
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Instagram Crawler", usage=usage())
     parser.add_argument(
-        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag, story_highlights, stories]"
+        "mode", help="options: [posts, posts_full, profile, profile_script, hashtag, story_highlights, stories, fb_fanpage_posts]"
     )
     parser.add_argument("-n", "--number", type=int, help="number of returned posts")
     parser.add_argument("-u", "--username", help="instagram's username")
@@ -133,8 +134,9 @@ if __name__ == "__main__":
 
     # fb
     elif args.mode == 'fb_fanpage_posts':
-        output(
-
-        )
+        # output(
+            
+        # )
+        get_fanpage_posts()
     else:
         usage()

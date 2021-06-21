@@ -1,15 +1,18 @@
 from __future__ import unicode_literals
 
 import glob
+from http.client import OK
 import json
 import os
 import re
 import sys
 import time
 import traceback
+import requests
+
 from builtins import open
 from time import sleep, time_ns
-
+from requests.models import codes
 from tqdm import tqdm
 
 from . import secret
@@ -429,21 +432,36 @@ class InsCrawler(Logging):
         story_buttons = browser.find(".OE3OK")
         return self.get_stories(story_buttons, num)
 
-class FbCrawler(InsCrawler):
+class FbCrawler():
     FAN_PAGE_URLS = [
         'https://www.facebook.com/mumumamagogo',
         'https://www.facebook.com/thelinskids',
         'https://www.facebook.com/angelsparadiseYAYAYA',
     ]
+    GRAPHQL_API = 'https://www.facebook.com/api/graphql/'
+
+    def __init__(self, has_screen=False):
+        super(FbCrawler, self).__init__()
+
+    def get_post_by_request(self, cursor=None):
+        variables = '{"UFI2CommentsProvider_commentsKey":"ProfileCometTimelineRoute","afterTime":null,"beforeTime":null,"count":3,"cursor": %s,"displayCommentsContextEnableComment":null,"displayCommentsContextIsAdPreview":null,"displayCommentsContextIsAggregatedShare":null,"displayCommentsContextIsStorySet":null,"displayCommentsFeedbackContext":null,"feedLocation":"TIMELINE","feedbackSource":0,"focusCommentID":null,"memorializedSplitTimeFilter":null,"omitPinnedPost":true,"postedBy":null,"privacy":null,"privacySelectorRenderLocation":"COMET_STREAM","renderLocation":"timeline","scale":1.5,"should_show_profile_pinned_post":true,"stream_count":1,"taggedInOnly":null,"useDefaultActor":false,"id":"100050607693965"}' % cursor
+        res = requests.post(FbCrawler.GRAPHQL_API, data={
+            'variables': variables,
+            'doc_id': 4068333413258967,
+        })
+        if res.status_code == requests.codes.ok:
+            print(res.json())
+            # json.loads()
 
     def login(self):
+        return True
         browser = self.browser
         login_url = 'https://www.facebook.com/login'
         browser.get(login_url)
 
-        input_username = browser.find('input[name="email"]')
+        input_username = browser.find_one('input[name="email"]')
         input_username.send_keys(secret.fb_username)
-        input_password = browser.find('input[name="pass"]')
+        input_password = browser.find_one('input[name="pass"]')
         input_password.send_keys(secret.fb_password)
 
         button_login = browser.find_one('#loginbutton')
@@ -455,17 +473,40 @@ class FbCrawler(InsCrawler):
                 raise RetryException()
         check_login()
 
+    def check_is_group_buying():
+        return False
+
     def get_single_post(self, post_link=''):
         browser = self.browser
+        print('post_link: ', post_link)
+        browser.get(post_link)
+
         post_content_el = browser.find('div[data-testid="post_message"]')
         post_content = post_content_el.innerText if post_content_el else ''
         post_link_els = browser.find('a[rel="nofollow"]', post_content_el)
         post_links_hrefs = list(map(lambda el: el.href, post_link_els))
         print(post_content, post_links_hrefs)
         
-    def get_single_fanpage_posts(self):
-        
+    def get_single_fanpage_posts(self, fanpage_url=''):
+        browser = self.browser
+        browser.get(fanpage_url)
+        sleep(1)
         post_link_els = browser.find("a.oajrlxb2.g5ia77u1.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.rq0escxv.nhd2j8a9.nc684nl6.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.hcukyx3x.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.i1ao9s8h.esuyzwwr.f1sip0of.lzcic4wl.gmql0nx0.gpro0wi8.b1v8xokw")
+        # print('post_link_els:', post_link_els)
+        post_link_urls = list(
+            map(lambda el: el.get_attribute('href'), post_link_els)
+        )
+        for i in range(len(post_link_urls)):
+            post_link_url = post_link_urls[i]
+            self.get_single_post(post_link_url)
 
     def get_fanpages_posts(self):
-        return {}
+        self.get_posts_by_request()
+        data_regexp = r"\{[\'|\"]\w+[\'|\"]\:[\'|\"]\w+?[\'|\"]\}"
+        res_data_str = '{"data":{"abc":"cccc"},{"abc":"kkk"}}'
+        matched = re.findall(data_regexp, res_data_str)
+        print(matched)
+        print(json.loads(matched[0]))
+        # for i in range(len(FbCrawler.FAN_PAGE_URLS)):
+        #     fanpage_url = FbCrawler.FAN_PAGE_URLS[i]
+        #     self.get_single_fanpage_posts(fanpage_url)
