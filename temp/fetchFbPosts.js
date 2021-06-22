@@ -2,6 +2,9 @@
 (() => {
   const configs = {
     GRAPHQL_API: 'https://www.facebook.com/api/graphql/',
+    regexp: {
+      URL: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+    },
     profiles: [
       {
         profileName: '德州媽媽沒有崩潰',
@@ -19,6 +22,10 @@
   }
 
   const StoryDataExtracter = {
+    getLinksFromMessageTxt: (txt='') => {
+      return txt.match(configs.regexp.URL);
+    },
+
     getStoryMessageText(story) {
       return story.node.comet_sections.content.story.comet_sections.message.story.message.text;
     },
@@ -35,7 +42,9 @@
     extractSingleStory(storyData) {
       const creationTime = this.getCreationTime(storyData);
       const storyMessageText = this.getStoryMessageText(storyData);
+      const links = this.getLinksFromMessageTxt(storyMessageText);
       return ({
+        links,
         creationTime,
         storyMessageText,
       })
@@ -43,6 +52,7 @@
   }
 
   const ProfileStoriesParser = {
+
     parseQuriedTextToJson: (txt='') => {
       const devided = txt.split('\n');
       const allParsed = devided.map(d => JSON.parse(d));
