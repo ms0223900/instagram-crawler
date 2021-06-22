@@ -12,6 +12,7 @@ import requests
 
 from builtins import open
 from time import sleep, time_ns
+from requests import models
 from requests.models import codes
 from tqdm import tqdm
 
@@ -433,6 +434,19 @@ class InsCrawler(Logging):
         return self.get_stories(story_buttons, num)
 
 class FbCrawler():
+    HEADERS = {
+        "accept": "*/*",
+        "accept-language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6,la;q=0.5",
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-ch-ua": "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"91\", \"Chromium\";v=\"91\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "viewport-width": "1862",
+        "x-fb-friendly-name": "ProfileCometTimelineFeedRefetchQuery",
+        "x-fb-lsd": "cMIGXiAY16Xv6sX8PVCfq9"
+    }
     FAN_PAGE_URLS = [
         'https://www.facebook.com/mumumamagogo',
         'https://www.facebook.com/thelinskids',
@@ -444,17 +458,17 @@ class FbCrawler():
         super(FbCrawler, self).__init__()
 
     def get_post_by_request(self, cursor='', doc_id=4076462995767329):
-        try:   
+        try:
             variables = '{"UFI2CommentsProvider_commentsKey":"ProfileCometTimelineRoute","afterTime":null,"beforeTime":null,"count":3,"cursor": %s,"displayCommentsContextEnableComment":null,"displayCommentsContextIsAdPreview":null,"displayCommentsContextIsAggregatedShare":null,"displayCommentsContextIsStorySet":null,"displayCommentsFeedbackContext":null,"feedLocation":"TIMELINE","feedbackSource":0,"focusCommentID":null,"memorializedSplitTimeFilter":null,"omitPinnedPost":true,"postedBy":null,"privacy":null,"privacySelectorRenderLocation":"COMET_STREAM","renderLocation":"timeline","scale":1.5,"should_show_profile_pinned_post":true,"stream_count":1,"taggedInOnly":null,"useDefaultActor":false,"id":"100050607693965"}' % (cursor)
 
             request_body_data = "variables={}&doc_id={}&av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKi8wGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7u2am1AyES&__csr=gvl3c478TsbinfOW6NIrdkySDO9tiYBb6lFmyidlAiJQXOA_IOhnh5IB7QQQQXhGGVquDCWLKUFq-yfKFepbGJdamQCDjAHnVqy8OlLAV5AWCjKhUx6ymh93aGqml6yaCAGVWVF9kbVd5xymFWiiKiF8O-nCUGi-59kV8Z3VGGUixe8GfCK8AxiaBK-FbqGuazE-5bxa5WBByGKmbU8Ve46EtwMxCay88oGqK22FUzmuU-48hAzryp8gyXG58C2aieyEjAx2fzogxudAG78bUG4Ft12ewBy9oeZwOxxzEC6ppazU5W6ubyEyi68eoc8K7p43aaypo9omDwjocUO7orG0yU0Laag0ocwdfwlo1YE1wF40iq02Pa0eBw75c0iJxqIi2W680Ce2Kbw8-0p-0Xm5UIAk05682uo0ep81b8EJ02A84J0&__req=s&__hs=18799.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004003765&__s=e0kt02%3Anddru1%3Afljobc&__hsi=6976182287695837750-0&__comet_req=1&fb_dtsg=AQHHc-zdSqlQ9fA%3AAQFdRQ5vyaghigU&jazoest=22691&lsd=LU1nCL2OApkaX9w1DoBQY-&__spin_r=1004003765&__spin_b=trunk&__spin_t=1624269012&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&server_timestamps=true".format(variables, doc_id)
 
-            print(request_body_data)
-            # res = requests.post(FbCrawler.GRAPHQL_API, data=request_body_data)
-            # print(res)
-            # if res.status_code == requests.codes.ok:
-            #     print(res.text)
-            #     return res.text
+            request_session = self.login()
+            res = request_session.post(FbCrawler.GRAPHQL_API, data=request_body_data, headers=FbCrawler.HEADERS)
+            print(res)
+            if res.status_code == requests.codes.ok:
+                print(res.text)
+                return res.text
         except requests.exceptions.RequestException as e:  
             # This is the correct syntax
             raise SystemExit(e)
@@ -477,25 +491,23 @@ class FbCrawler():
             print(sys.exc_info()[0])
             return None
 
+    # 試驗中...
     def login(self):
-        return True
-        browser = self.browser
-        login_url = 'https://www.facebook.com/login'
-        browser.get(login_url)
-
-        input_username = browser.find_one('input[name="email"]')
-        input_username.send_keys(secret.fb_username)
-        input_password = browser.find_one('input[name="pass"]')
-        input_password.send_keys(secret.fb_password)
-
-        button_login = browser.find_one('#loginbutton')
-        button_login.click()
-
-        @retry()
-        def check_login():
-            if browser.find_one('input[name="email"]'):
-                raise RetryException()
-        check_login()
+        request_session = requests.session()
+        LOGIN_URL = 'https://www.facebook.com/login'
+        username = secret.fb_username
+        password = secret.fb_password
+        payload = {
+            'email': username,
+            'password': password,
+        }
+        try:
+            request_session.post(LOGIN_URL, data=payload, headers=FbCrawler.HEADERS)
+            return request_session
+            pass
+        except requests.exceptions.RequestException as e:  
+            # This is the correct syntax
+            raise SystemExit(e)
 
     def check_is_group_buying():
         return False
