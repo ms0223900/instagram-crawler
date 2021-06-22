@@ -18,6 +18,30 @@
     ],
   }
 
+  const StoryDataExtracter = {
+    getStoryMessageText(story) {
+      return story.node.comet_sections.content.story.comet_sections.message.story.message.text;
+    },
+
+    getCreationTime(story) {
+      const storyMetadata = story.node.comet_sections.context_layout.story.comet_sections.metadata;
+      const timeStamp = storyMetadata.find(s => (
+        s.__typename === 'CometFeedStoryMinimizedTimestampStrategy'
+      ))
+      const originCreationTime = timeStamp ? timeStamp.story.creation_time : 0;
+      return originCreationTime * 1000;
+    },
+
+    extractSingleStory(storyData) {
+      const creationTime = this.getCreationTime(storyData);
+      const storyMessageText = this.getStoryMessageText(storyData);
+      return ({
+        creationTime,
+        storyMessageText,
+      })
+    }
+  }
+
   const ProfileStoriesParser = {
     parseQuriedTextToJson: (txt='') => {
       const devided = txt.split('\n');
@@ -50,6 +74,7 @@
         a.label === 'ProfileCometTimelineFeed_user$stream$ProfileCometTimelineFeed_user_timeline_list_feed_units'
       )).map(p => p.data);
       stories.push(...otherStories);
+      const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
       const pageInfoData = allParsed.find(a => (
         a.label === 'ProfileCometTimelineFeed_user$defer$ProfileCometTimelineFeed_user_timeline_list_feed_units$page_info'
       ));
@@ -57,6 +82,7 @@
 
       return ({
         stories,
+        extractedStories,
         pageInfo,
       })
     },
@@ -64,9 +90,12 @@
     getStoriesAndPageInfoFromPageTypeData(allParsed=[]) {
       const timeLineFeedUnits = allParsed[0].data.node.timeline_feed_units;
       const stories = timeLineFeedUnits.edges;
+      const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
       const pageInfo = timeLineFeedUnits.page_info;
+
       return ({
         stories,
+        extractedStories,
         pageInfo,
       })
     },
@@ -183,6 +212,7 @@
     async queryFeeds(fetchPostsAmount = 5) {
       let i = 0;
       let fetchedStories = [];
+      let allExtractedStories = [];
       let fetchedDataList = [];
 
       try {
@@ -194,11 +224,11 @@
           if(!parsed) {
             break;
           } else { 
-            fetchedStories.push(parsed.stories);
+            fetchedStories.push(...parsed.stories);
+            allExtractedStories.push(...parsed.extractedStories);
             fetchedDataList.push(parsed.allParsed);
             const newCursor = parsed.pageInfo.end_cursor;
             this.#updateCursor(newCursor);
-            // cursor = parsed.pageInfo.data.page_info.end_cursor;
           }
           i++;
         }
@@ -207,6 +237,7 @@
       }
       return ({
         profileName: this.profileName, 
+        allExtractedStories,
         fetchedStories,
       })
     }
