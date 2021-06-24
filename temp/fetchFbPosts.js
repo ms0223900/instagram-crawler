@@ -1,6 +1,7 @@
 // const fetch = require('node-fetch')
 (() => {
   const configs = {
+    defaultFetchFeedsAmount: 3,
     GRAPHQL_API: 'https://www.facebook.com/api/graphql/',
     regexp: {
       URL: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
@@ -10,7 +11,7 @@
         profileName: '德州媽媽沒有崩潰',
         pageUrl: 'https://www.facebook.com/mumumamagogo',
         id: '100050607693965',
-        docId: 4076462995767329,
+        docId: 4309687509094181,
       },
       {
         profileName: "林叨囝仔 The Lins' Kids",
@@ -22,6 +23,42 @@
   }
 
   const StoryDataExtracter = {
+    getStoryMetaData: (story) => {
+      return story.node.comet_sections.context_layout.story.comet_sections.metadata;
+    },
+    getStoryTimeStampMeta(story) {
+      const storyMetaData = this.getStoryMetaData(story);
+      const timeStamp = storyMetaData.find(s => (
+        s.__typename === 'CometFeedStoryMinimizedTimestampStrategy'
+      ));
+      return timeStamp;
+    },
+
+    getStoryPostLink(story) {
+      const timeStamp = this.getStoryTimeStampMeta(story);
+      return timeStamp ? timeStamp.story.url : '';
+    },
+
+    getStoryAttachments: (story) => (
+      story.node.comet_sections.content.story.attachments
+    ),
+
+    getStoryFeedback: (story) => {
+      const feedback = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.comet_ufi_summary_and_actions_renderer.feedback
+      const reactionCount = feedback.reaction_count.count;
+      const shareCount = feedback.share_count.count;
+      return ({
+        reactionCount,
+        shareCount,
+      })
+    },
+
+    getStoryComments: (story) => {
+      const feedbackCtx = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context;
+      const comments = feedbackCtx.display_comments;
+      return comments;
+    },
+
     getLinksFromMessageTxt: (txt='') => {
       return txt.match(configs.regexp.URL);
     },
@@ -31,10 +68,7 @@
     },
 
     getCreationTime(story) {
-      const storyMetadata = story.node.comet_sections.context_layout.story.comet_sections.metadata;
-      const timeStamp = storyMetadata.find(s => (
-        s.__typename === 'CometFeedStoryMinimizedTimestampStrategy'
-      ))
+      const timeStamp = this.getStoryTimeStampMeta(story);
       const originCreationTime = timeStamp ? timeStamp.story.creation_time : 0;
       return originCreationTime * 1000;
     },
@@ -43,10 +77,17 @@
       const creationTime = this.getCreationTime(storyData);
       const storyMessageText = this.getStoryMessageText(storyData);
       const links = this.getLinksFromMessageTxt(storyMessageText);
+      const attachments = this.getStoryAttachments(storyData);
+      const postLink = this.getStoryPostLink(storyData);
+      const feedback = this.getStoryFeedback(storyData);
+
       return ({
+        postLink,
+        attachments,
         links,
         creationTime,
         storyMessageText,
+        feedback,
       })
     }
   }
@@ -193,11 +234,10 @@
             "sec-fetch-site": "same-origin",
             "viewport-width": "1862",
             "x-fb-friendly-name": "ProfileCometTimelineFeedRefetchQuery",
-            "x-fb-lsd": "cMIGXiAY16Xv6sX8PVCfq9"
+            "x-fb-lsd": "Iqdy_lz1jIG43_WjsnepFt"
         },
-        // "referrer": "https://www.facebook.com/mumumamagogo",
         "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": `variables=${JSON.stringify(data.variables)}&doc_id=${data.doc_id}&av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKi8wGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7u2am1AyES&__csr=gvl3c478TsbinfOW6NIrdkySDO9tiYBb6lFmyidlAiJQXOA_IOhnh5IB7QQQQXhGGVquDCWLKUFq-yfKFepbGJdamQCDjAHnVqy8OlLAV5AWCjKhUx6ymh93aGqml6yaCAGVWVF9kbVd5xymFWiiKiF8O-nCUGi-59kV8Z3VGGUixe8GfCK8AxiaBK-FbqGuazE-5bxa5WBByGKmbU8Ve46EtwMxCay88oGqK22FUzmuU-48hAzryp8gyXG58C2aieyEjAx2fzogxudAG78bUG4Ft12ewBy9oeZwOxxzEC6ppazU5W6ubyEyi68eoc8K7p43aaypo9omDwjocUO7orG0yU0Laag0ocwdfwlo1YE1wF40iq02Pa0eBw75c0iJxqIi2W680Ce2Kbw8-0p-0Xm5UIAk05682uo0ep81b8EJ02A84J0&__req=s&__hs=18799.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004003765&__s=e0kt02%3Anddru1%3Afljobc&__hsi=6976182287695837750-0&__comet_req=1&fb_dtsg=AQHHc-zdSqlQ9fA%3AAQFdRQ5vyaghigU&jazoest=22691&lsd=LU1nCL2OApkaX9w1DoBQY-&__spin_r=1004003765&__spin_b=trunk&__spin_t=1624269012&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&server_timestamps=true`,
+        "body": `variables=${JSON.stringify(data.variables)}&doc_id=${data.doc_id}&av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw2nVEtwMw65xOfwwwto88427Uy11xmfz83WwgEcHAy8aEaoG0Boy1PwBgK7qxS18wc61axe3e9xy3O1mzXxG1Pxi4UaEW2G1jxS6Fobrxu5Elxm3y2K5ojUlDw-wUws9o8oy2a2-2W1TwyBwp8Gdw&__csr=g84dN4BR92clOhind6Nq59q48TvbEWARlRRb9fGB9kWHlFd8Le9-F4KWhWuXqLWoxDjrBZ5HOuBhvinh4u-XUSmFfKl4HqiGQHX8zyfRWGmUBbLximuiLKGxi9gJ6F4ypdeiAiiuVH-jAJ915keFKZqhqDKituaQ9CzHgmKmvy8HV8cAmqUyK4bXhoN2Gy6qfyp448ky44aVUW3imaxdp8hxW7t2ouBUyaxGex2cAKi9BXAxidUOdyk5EWfVUyucDyqx-maGm49ECFWyaDyouwTgaA8yXx4wswpp8-9yEhCy8jAwwUCaK2yqm3W1cBxG58a8jz8Obxm264Ujxuaxe4U4R3EuwxwFwk80h3w3zGg28w5MUtw3h4q3W1gyE0aw80I-05g3w4LobE-4PedwFw7pwvo0x-0g2dkq1yAg0Dq0se0VE7u9wZw0VJ40mU0Zu&__req=x&__hs=18802.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004029258&__s=qejb0n%3Atc8bpz%3Akh3994&__hsi=6977319740667478675-0&__comet_req=1&fb_dtsg=AQHePYcLrK1JQ44%3AAQFTqbHCA8_XGPM&jazoest=22400&lsd=oPWO640KGIFnQ34kWbFSKY&__spin_r=1004029258&__spin_b=trunk&__spin_t=1624533846&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&server_timestamps=true`,
         "method": "POST",
         "mode": "cors",
         "credentials": "include"
@@ -261,7 +301,7 @@
         docId: profile.docId,
         id: profile.id,
       })
-      const fetchedFeeds = await feedQuerier.queryFeeds(3)
+      const fetchedFeeds = await feedQuerier.queryFeeds(configs.defaultFetchFeedsAmount)
       allFetchedFeeds.push(fetchedFeeds)
     }
     return allFetchedFeeds;
