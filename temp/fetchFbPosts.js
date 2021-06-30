@@ -2,13 +2,14 @@
 (() => {
   const configs = {
     // 每次只要替換form body str即可
-    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw2nVEtwMw65xOfwwwto88427Uy11xmfz83WwgEcHzoaEaoG0Boy1PwBgK7qxS18wc61axe3e9xy3O1mzXxG1Pxi4UaEW2G1jxS6Fobrxu5Elxm3y2K5ojUlDw-wAxe1MBwxy88EbUbHwsU8Fo6iazo&__csr=guW1d2AZTdkr34j6gwJW8wEl8kBdkoD8OcmSHniLRhBFlYx4l4O6QXmXSKXCa9BDQXp9qKRh2XKqWqJaiBQF5nVXCV7Zdqy4FZx1WDy4StJ9Ki4KiHYwGaW9BHavKFoKjUPUyFpoy-eohDF16fG9Zy8KeHm-UiGjHGKiEoh9UKml5jDBzCqbCQEGdzGJ151h6LAzp8lyo9oybCWUhwCzppFeaKEJ7wIzoOexq4ahVF-8GUGeGu9yojxx2UR1u25aq5az8-nwMF28jAwEXUhFkbyA58gyolwlUN4VXxW9wByE4ii7UryUiht28kwJzEC7EapK5ovgC3eu6o5a2m1OzoS58foK0s20fRw8q0Bo4PG0LK0_o1So5Oi9w20ofA03tm06wod84-dgCh0DuazQ4KU0y26U2gww4CQ1kw8K0yC0I86u05QE4i9wHw0Y1w6EBl02w8y&__req=f&__hs=18807.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004052785&__s=qw8kgn%3Advrsik%3Arg5jse&__hsi=6979194400383577320-0&__comet_req=1&fb_dtsg=AQHWI3P2SGfN8Tw%3AAQFTAkCPGV0qbps&jazoest=22472&lsd=e8-H2THMLnXUQIoZg9Ln2j&__spin_r=1004052785&__spin_b=trunk&__spin_t=1624970324&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRy8HG3fqB6wvWFNJK9XKVqboQz6a8N5UtKXuCpR-HrGOc4PAHYQKmZNvR-Pl_kn9otW266B3BjHTvqZZPbVeLxSl_Q4B99w3GbHA2HJTzSjMe19NZBeFqfmFcdqr6xOM1%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=4801601979866648',
+    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgU76byQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKdwGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3rws9o8oy2a2-2W1TwyBwJwSyES&__csr=gaky2sRj9h4psLOEn2QTbn9XR4tkjqkI_hcWhbWaAjpAPa9p6G8CApClQbm_rQm8h9bqTKnRhHArV9qybFaWFrhVUOV2eEHlrFvjFZaV-8G8jhkFH-mcJHcQhkAVevDGV94iqW-q9Kalehd2bLVqGi5peq8xiWCgGuUW8hHxXDXrGFBCzbBAHy99ogVoiyaBxa2KubgHgy9BGeUmyay4fAyK5oBa9CAwywKUKdAxeazpUmyCayUSGCyopyE5auu2imbye6Uxu5UoGbmq5GDCKQ6Gt5iKq6V85Gex6dx-bwwgK4oHwzACxK16yoeEK68iwOKqezolwXwWxm0y89E2qw2YU0h5G17w4pw9he1Rw25pA2i032e2205Zb4p8a85AEzDCwFg2YwxU0Xm0rB284e1fA5i02Y81uUfU7B0eu07Ze053yw8K0dvpE&__req=f&__hs=18808.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004060342&__s=qdzign%3Aid6gyt%3Asselew&__hsi=6979560554884785400-0&__comet_req=1&fb_dtsg=AQHpBahIKyTNmMs%3AAQGZc7nLyS8eS2g&jazoest=22631&lsd=IrBm8mFJ2HBu0rTt1Tk-_K&__spin_r=1004060342&__spin_b=trunk&__spin_t=1625055576&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=CometModernPageFeedPaginationQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22CometSinglePageContentContainerFeedQuery%22%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRkCBy0ayBEOZfsxeWctAjKqNzxWJ3a_7loHDAy2lsPi_hD1AZHS11UT1dqUDcqkG0mf57CYbz1hQZMjfxj-tPSydzTZLHfRDtwc-BznJJvJ_FB_2A-83X7Y4Gj_qIYii5%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22PAGE_TIMELINE%22%2C%22feedbackSource%22%3A22%2C%22focusCommentID%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22478111275689824%22%7D&server_timestamps=true&doc_id=4025931797526184',
     options: {
-      defaultFetchFeedsAmount: 3,
+      // 總數量為以下數字*3, e.g. 給2 則會找到 6則
+      defaultFetchFeedsAmount: 2,
       // dev會保留fetchedStories等等的原始資料
       isDev: false,
-      isFilteringTodayPosts: false,
-      isFilteringPostsWithLinks: false,
+      isFilteringTodayPosts: true,
+      isFilteringPostsWithLinks: true,
     },
     GRAPHQL_API: 'https://www.facebook.com/api/graphql/',
     regexp: {
@@ -27,6 +28,144 @@
         id: '1226268757449496',
         docId: 4580180615344865,
       },
+      {
+          "pageUrl": "https://www.facebook.com/moka700720",
+          "profileName": "麻的法課 - 邱豑慶醫師",
+          id: '309451919769378',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/2uncle",
+          "profileName": "嘎嫂二伯",
+          id: '100044617291038',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/DOCT0RStrange",
+          "profileName": "盾牌牙醫史書華",
+          id: '100044115413873',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/dream76843",
+          "profileName": "小A辣",
+          id: '100044389150787',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/grassgrass1218",
+          "profileName": "小草Grass 日々は楽しさ",
+          id: '100044179236624',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/mmslovelife/",
+          "profileName": "麵麵的l.o.v.e.生活",
+          id: '360431040706603',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/jzmom",
+          "profileName": "筋肉媽媽",
+          id: '100044446778955',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/twodeerman",
+          "profileName": "鹿人",
+          id: '100044200461059',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/DRWILLYWANG/",
+          "profileName": "威力醫師的育兒週記-王韋力",
+          id: '293810851462868',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/riceandshineee/",
+          "profileName": "Rice & Shine",
+          id: '486183621434791',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/%E5%A4%A7%E8%B1%A1%E7%99%BC%E7%A6%8F%E5%BB%9A%E6%88%BF-574278822963127/",
+          "profileName": "大象發福廚房",
+          id: '574278822963127',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/beevivian111",
+          "profileName": "小Bee&森森",
+          id: '100044215760246',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/CLSHIH1029/",
+          "profileName": "史佳霖喬韓森",
+          id: '872810369735736',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/technologymommy/",
+          "profileName": "科技主婦carolchen",
+          id: '526217961092528',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/TigerblueStory",
+          "profileName": "二師兄",
+          id: '291618078078594',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/minminkitchen/",
+          "profileName": "MinMin山邊小廚房",
+          id: '1059037554121583',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/permio1",
+          "profileName": "跟著左豪吃不胖&親子樂活趣",
+          id: '525156674221919',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/ddcqqmei",
+          "profileName": "QQmei",
+          id: '100044641830084',
+          docId: 4754979187852304,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/DandHsMomCrazyStorage/",
+          "profileName": "二寶媽療癒系之變態收納",
+          id: '441152742988233',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/lilyotani928/",
+          "profileName": "日式簡單生活",
+          id: '1781263275217354',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/mrstienkitchen/",
+          "profileName": "小田太太の玩樂廚房",
+          id: '1023392301083526',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/tastynote.tw/",
+          "profileName": "TASTY NOTE 日本男子的日式家庭料理",
+          id: '519317411850489',
+          docId: 4025931797526184,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/rosalinakitchen/",
+          "profileName": "蘿潔塔的廚房",
+          id: '478111275689824',
+          docId: 4025931797526184,
+      }
     ],
   }
 
@@ -42,6 +181,9 @@
   }
 
   const StoryMarkdownParser = {
+    filteredExtractedStoryTitle: '## 符合條件的貼文(發文日期是今天而且貼文內有連結)',
+    'filteredExtractedStory.noPosts': '無符合條件的貼文',
+
     parseLinks: (linksData) => {
       const linksStr = linksData.links ? linksData.links.join('\n') : '無連結';
       return `### ${linksData.name}` + '\n' + linksStr;
@@ -59,7 +201,12 @@
 
     convertToMarkdownFormat(storyData) {
       const storiesStr = storyData.allExtractedStories.map((s, i) => this.convertSingleExtractedStory(s, i)).join('\n\n');
-      return `# ${storyData.profileName}\n${storiesStr}`;
+      const filteredStoriesStr = storyData.allFilteredExtractedStories.length > 0 ? (
+        storyData.allFilteredExtractedStories.map((s, i) => this.convertSingleExtractedStory(s, i)).join('\n\n')
+      ) : this['filteredExtractedStory.noPosts'];
+      const storyContentStr = 
+        `${this.filteredExtractedStoryTitle}\n${filteredStoriesStr}\n${ configs.options.isDev ? storiesStr : ''}\n`
+      return `# ${storyData.profileName}\n${storyContentStr}`;
     },
 
     parseStoryDataList(stories=[]) {
@@ -221,6 +368,15 @@
       return ''
     },
 
+    extractStories(stories=[]) {      
+      const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
+      const filteredExtractedStories = this.filterExtractedStoriesWithOptions([...extractedStories]);
+      return ({
+        extractedStories,
+        filteredExtractedStories,
+      })
+    },
+
     getStoriesAndPageInfoFromUserTypeData(allParsed=[]) {
       let stories = [];
       let pageInfo = undefined;
@@ -231,9 +387,10 @@
         a.label === 'ProfileCometTimelineFeed_user$stream$ProfileCometTimelineFeed_user_timeline_list_feed_units'
       )).map(p => p.data);
       stories.push(...otherStories);
-      
-      let extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
-      extractedStories = this.filterExtractedStoriesWithOptions(extractedStories);
+
+      const {
+        extractedStories, filteredExtractedStories,
+      } = this.extractStories(stories);
 
       const pageInfoData = allParsed.find(a => (
         a.label === 'ProfileCometTimelineFeed_user$defer$ProfileCometTimelineFeed_user_timeline_list_feed_units$page_info'
@@ -243,6 +400,7 @@
       return ({
         stories,
         extractedStories,
+        filteredExtractedStories,
         pageInfo,
       })
     },
@@ -273,11 +431,13 @@
       const stories = timeLineFeedUnits.edges;
       const pageInfo = timeLineFeedUnits.page_info;
 
-      let extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
-      extractedStories = this.filterExtractedStoriesWithOptions(extractedStories);
+      const {
+        extractedStories, filteredExtractedStories,
+      } = this.extractStories(stories);
 
       return ({
         stories,
+        filteredExtractedStories,
         extractedStories,
         pageInfo,
       })
@@ -422,6 +582,7 @@
       let i = 0;
       let fetchedStories = [];
       let allExtractedStories = [];
+      let allFilteredExtractedStories = [];
       let fetchedDataList = [];
 
       try {
@@ -435,6 +596,7 @@
           } else { 
             fetchedStories.push(...parsed.stories);
             allExtractedStories.push(...parsed.extractedStories);
+            allFilteredExtractedStories.push(...parsed.filteredExtractedStories);
             fetchedDataList.push(parsed.allParsed);
             const newCursor = parsed.pageInfo.end_cursor;
             this.#updateCursor(newCursor);
@@ -442,11 +604,13 @@
           i++;
         }
       } catch(e) {
+        console.log(`Query feed: ${this.profileName} failed.`)
         console.log(e);
       }
       return ({
         profileName: this.profileName, 
         allExtractedStories,
+        allFilteredExtractedStories,
         fetchedStories: configs.options.isDev ? fetchedStories : undefined,
       })
     }
@@ -470,10 +634,8 @@
     .then(res => {
       if(res) {
         const downloader = new FileDownloader();
-        // downloader.downloadJsonFile(res);
-        setTimeout(() => {
-          downloader.downloadMarkdownFile(res);
-        }, 200)
+        downloader.downloadJsonFile(res);
+        downloader.downloadMarkdownFile(res);
       }
       console.log(res);
     })

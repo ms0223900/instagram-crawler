@@ -5,6 +5,8 @@
   "version": "1.0.0",
   "main": "pathToMain",
   "dependencies": {
+    "@notionhq/client": "^0.2.0",
+    "dotenv": "^10.0.0",
     "node-fetch": "^2.6.1"
   }
 }
