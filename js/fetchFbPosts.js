@@ -7,9 +7,9 @@
       // 總數量為以下數字*3, e.g. 給2 則會找到 6則
       defaultFetchFeedsAmount: 2,
       // dev會保留fetchedStories等等的原始資料
-      isDev: false,
-      isFilteringTodayPosts: true,
-      isFilteringPostsWithLinks: true,
+      isDev: true,
+      // isFilteringTodayPosts: true,
+      // isFilteringPostsWithLinks: true,
     },
     GRAPHQL_API: 'https://www.facebook.com/api/graphql/',
     regexp: {
@@ -165,7 +165,48 @@
           "profileName": "蘿潔塔的廚房",
           id: '478111275689824',
           docId: 4025931797526184,
-      }
+      },
+
+    {
+        "pageUrl": "https://www.facebook.com/kumikomeow.Pretty.Pay",
+        "profileName": "柚子萱の小鐵盒"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/lovetoeatYunx2",
+        "profileName": "愛吃鬼芸芸"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/kim.hu1025",
+        "profileName": "Kimy"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/coomelon",
+        "profileName": "I'm哺哺媽咪-哺媽育兒生活"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/nata0912/",
+        "profileName": "我可是生活家"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/linkuokuo",
+        "profileName": "小林&郭郭的小夫妻生活"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/s.smilelife",
+        "profileName": "Smile Life 維媽育兒生活"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/fuchikolovefood",
+        "profileName": "誠實吃貨家"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/PerryWife",
+        "profileName": "多肉太太 kenalice"
+    },
+    {
+        "pageUrl": "https://www.facebook.com/ovaltine82",
+        "profileName": "阿華田的美食日記"
+    },
     ],
   }
 
@@ -183,6 +224,7 @@
   const StoryMarkdownParser = {
     filteredExtractedStoryTitle: '## 符合條件的貼文(發文日期是今天而且貼文內有連結)',
     'filteredExtractedStory.noPosts': '無符合條件的貼文',
+    storyMode: configs.options.isDev ? '--開發模式--' : '--簡易模式--',
 
     parseLinks: (linksData) => {
       const linksStr = linksData.links ? linksData.links.join('\n') : '無連結';
@@ -210,7 +252,8 @@
     },
 
     parseStoryDataList(stories=[]) {
-      return stories.map(s => this.convertToMarkdownFormat(s)).join('\n\n')
+      const parsedContent = stories.map(s => this.convertToMarkdownFormat(s)).join('\n\n');
+      return `${this.storyMode}\n${parsedContent}`;
     }
   }
 
@@ -327,6 +370,13 @@
       });
     },
 
+    getMetaOptions(links, creationTimeMs) {
+      return ({
+        isToday: ProfileStoriesParser.checkPostIsToday(creationTimeMs),
+        haveLinks: !!(links.links),
+      })
+    },
+
     extractSingleStory(storyData) {
       const creationTime = this.getCreationTime(storyData);
       const storyMessageText = this.getStoryMessageText(storyData);
@@ -334,10 +384,13 @@
       // const attachments = this.getStoryAttachments(storyData);
       const postLink = this.getStoryPostLink(storyData);
       const feedback = this.getStoryFeedback(storyData);
+      // 新增一個欄位來判斷
+      const metaOptions = this.getMetaOptions(links, creationTime.creationTimeMs)
 
       return ({
+        metaOptions,
         postLink,
-        attachments: configs.options.isDev ? attachments : undefined,
+        // attachments: configs.options.isDev ? attachments : undefined,
         links,
         creationTime,
         storyMessageText,
@@ -370,7 +423,7 @@
 
     extractStories(stories=[]) {      
       const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
-      const filteredExtractedStories = this.filterExtractedStoriesWithOptions([...extractedStories]);
+      const filteredExtractedStories = this.filterExtractedStoriesWithMetaOptions([...extractedStories]);
       return ({
         extractedStories,
         filteredExtractedStories,
@@ -405,8 +458,8 @@
       })
     },
 
-    checkPostIsToday: (story) => {
-      const postDate = new Date(story.creationTime.creationTimeMs);
+    checkPostIsToday: (creationTimeMs) => {
+      const postDate = new Date(creationTimeMs);
       const today = new Date();
       return (
         today.getFullYear() === postDate.getFullYear() &&
@@ -415,15 +468,10 @@
       )
     },
 
-    filterExtractedStoriesWithOptions(extractedStories=[]) {
-      let res = [...extractedStories];
-      if(configs.options.isFilteringPostsWithLinks) {
-        res = res.filter(r => !!(r.links.links))
-      }
-      if(configs.options.isFilteringTodayPosts) {
-        res = res.filter(r => this.checkPostIsToday(r))
-      }
-      return res;
+    filterExtractedStoriesWithMetaOptions(extractedStories=[]) {
+      return extractedStories.filter(s => (
+        s.metaOptions.isToday && s.metaOptions.haveLinks
+      ))
     },
 
     getStoriesAndPageInfoFromPageTypeData(allParsed=[]) {
@@ -617,7 +665,9 @@
   }
 
   async function queryFeeds() {
-    let allFetchedFeeds = []
+    let allFetchedFeeds = [];
+    const creationTime = new Date().toISOString();
+
     for await (const profile of configs.profiles) {
       const feedQuerier = new ProfileTimelineFeedQuerier({
         profileName: profile.profileName,
@@ -627,7 +677,11 @@
       const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
       allFetchedFeeds.push(fetchedFeeds)
     }
-    return allFetchedFeeds;
+
+    return ({
+      creationTime,
+      allFetchedFeeds,
+    });
   }
 
   queryFeeds()
