@@ -2,12 +2,18 @@
 (() => {
   const configs = {
     // 每次只要替換form body str即可
-    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgU76byQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKdwGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3rws9o8oy2a2-2W1TwyBwJwSyES&__csr=gaky2sRj9h4psLOEn2QTbn9XR4tkjqkI_hcWhbWaAjpAPa9p6G8CApClQbm_rQm8h9bqTKnRhHArV9qybFaWFrhVUOV2eEHlrFvjFZaV-8G8jhkFH-mcJHcQhkAVevDGV94iqW-q9Kalehd2bLVqGi5peq8xiWCgGuUW8hHxXDXrGFBCzbBAHy99ogVoiyaBxa2KubgHgy9BGeUmyay4fAyK5oBa9CAwywKUKdAxeazpUmyCayUSGCyopyE5auu2imbye6Uxu5UoGbmq5GDCKQ6Gt5iKq6V85Gex6dx-bwwgK4oHwzACxK16yoeEK68iwOKqezolwXwWxm0y89E2qw2YU0h5G17w4pw9he1Rw25pA2i032e2205Zb4p8a85AEzDCwFg2YwxU0Xm0rB284e1fA5i02Y81uUfU7B0eu07Ze053yw8K0dvpE&__req=f&__hs=18808.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004060342&__s=qdzign%3Aid6gyt%3Asselew&__hsi=6979560554884785400-0&__comet_req=1&fb_dtsg=AQHpBahIKyTNmMs%3AAQGZc7nLyS8eS2g&jazoest=22631&lsd=IrBm8mFJ2HBu0rTt1Tk-_K&__spin_r=1004060342&__spin_b=trunk&__spin_t=1625055576&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=CometModernPageFeedPaginationQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22CometSinglePageContentContainerFeedQuery%22%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRkCBy0ayBEOZfsxeWctAjKqNzxWJ3a_7loHDAy2lsPi_hD1AZHS11UT1dqUDcqkG0mf57CYbz1hQZMjfxj-tPSydzTZLHfRDtwc-BznJJvJ_FB_2A-83X7Y4Gj_qIYii5%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22PAGE_TIMELINE%22%2C%22feedbackSource%22%3A22%2C%22focusCommentID%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22478111275689824%22%7D&server_timestamps=true&doc_id=4025931797526184',
+    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKdwGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7ui7po6iazo&__csr=gb4lkIh9d3sy4SgG224ZTkjPndEHpsBAii8F6GZkjHykiO98h-L8W9hFUyF-GKlerG4t5hszbAJfCV_yqWBDDmrAUPAjF4G-aGjnhHgCbHBBCyWye4-hehaumXGAjKVSAGKECEzAxl7AxeuTgrK-eCBmu4e4Gz99F-i9Cy8Clp6m6ohAhXGqmcKHUCUyeBjCK324VqwzUyi4HzE8UTzUym6bXChoy9wFxCU-48jLDwVBVoihaxi5EozVEW68Ccy8Wu9Uhz8ySV8a8lwyoeqDAGUGE9ogxCuLGiq22u1aABBxC3e0QQ5862q1swAw3gEbUC0mWUc80Dm0v20Io5O3a0mG0iadgjw0Xlw1ina0gQweEgJh1E980F-1Jw5WxW0_84wknzk4E1zo0XW1Hw2YA02_20vOli02CoC&__req=p&__hs=18811.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004076031&__s=54srm8%3Aysiqjl%3A8h232v&__hsi=6980664490628373144-0&__comet_req=1&fb_dtsg=AQF9UQNbRHV9Xt4%3AAQEqlF_6aOWXiJE&jazoest=22480&lsd=9IlMRMy5bvhUNGF3-WBRvd&__spin_r=1004076031&__spin_b=trunk&__spin_t=1625312606&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRfdrZd4rpNDbV_7UrNREpWfZqkcgmI_gAfpxcxOLePlWISzDQxlAGi9Q1RS0d2LclgXF8ywy71WyU_ArQoABUv_7kcrE2-b2lz0JYyP0TR0R3ZCwZvuta_5tLYuU2M9AY%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=3820813564695818',
+    jsonBinConfigs: {
+      binId: '',
+      apiKey: '',
+    },
+    firebaseConfigs: {
+    },
     options: {
       // 總數量為以下數字*3, e.g. 給2 則會找到 6則
       defaultFetchFeedsAmount: 2,
       // dev會保留fetchedStories等等的原始資料
-      isDev: true,
+      isDev: false,
       // isFilteringTodayPosts: true,
       // isFilteringPostsWithLinks: true,
     },
@@ -167,46 +173,274 @@
           docId: 4025931797526184,
       },
 
-    {
-        "pageUrl": "https://www.facebook.com/kumikomeow.Pretty.Pay",
-        "profileName": "柚子萱の小鐵盒"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/lovetoeatYunx2",
-        "profileName": "愛吃鬼芸芸"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/kim.hu1025",
-        "profileName": "Kimy"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/coomelon",
-        "profileName": "I'm哺哺媽咪-哺媽育兒生活"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/nata0912/",
-        "profileName": "我可是生活家"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/linkuokuo",
-        "profileName": "小林&郭郭的小夫妻生活"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/s.smilelife",
-        "profileName": "Smile Life 維媽育兒生活"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/fuchikolovefood",
-        "profileName": "誠實吃貨家"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/PerryWife",
-        "profileName": "多肉太太 kenalice"
-    },
-    {
-        "pageUrl": "https://www.facebook.com/ovaltine82",
-        "profileName": "阿華田的美食日記"
-    },
+      {
+          "pageUrl": "https://www.facebook.com/kumikomeow.Pretty.Pay",
+          "profileName": "柚子萱の小鐵盒",
+          id: '651029542000798',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/lovetoeatYunx2",
+          "profileName": "愛吃鬼芸芸",
+          id: '100044343583557',
+          docId: 3820813564695818,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/kim.hu1025",
+          "profileName": "Kimy",
+          id: '437147409797347',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/coomelon",
+          "profileName": "I'm哺哺媽咪-哺媽育兒生活",
+          id: '126559634670144',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/nata0912/",
+          "profileName": "我可是生活家",
+          id: '124721477573662',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/linkuokuo",
+          "profileName": "小林&郭郭的小夫妻生活",
+          id: '660915803981397',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/s.smilelife",
+          "profileName": "Smile Life 維媽育兒生活",
+          id: '355338101207834',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/fuchikolovefood",
+          "profileName": "誠實吃貨家",
+          id: '792415717576951',
+          docId: 3456446391124496,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/PerryWife",
+          "profileName": "多肉太太 kenalice",
+          id: '100044446688982',
+          docId: 3820813564695818,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/ovaltine82",
+          "profileName": "阿華田的美食日記",
+          id: '100044150663659',
+          docId: 3820813564695818,
+      },
+
+      // 7/1 added
+      {
+          "pageUrl": "https://www.facebook.com/hahan.mammy",
+          "profileName": "哈韓孕媽咪．正韓直送",
+          id: '205200392829655',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yukiclub/",
+          "profileName": "Yuki's Life",
+          id: '100044499336931',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/fb.paine0602",
+          "profileName": "小不點看世界",
+          id: '722554827858608',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/HELLOFIFI",
+          "profileName": "I am FiFi",
+          id: '211264105579183',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/terrilee1026",
+          "profileName": "人字拖小姮",
+          id: '100044563803872',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/smallwen53/",
+          "profileName": "小文甜生活 Evelyn Wang",
+          id: '100044454758711',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/HCSxSummer/",
+          "profileName": "HCS x Summer",
+          id: '1648960168505905',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/kingbabytw/",
+          "profileName": "妞媽分享愛",
+          id: '100044525377225',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/tainan.sunny",
+          "profileName": "媽媽我想嫁去台南",
+          id: '100044360203170',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yoke918",
+          "profileName": "青青小熊＊旅遊札記",
+          id: '100044282386832',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/sophiemommy/",
+          "profileName": "蘇菲媽咪的異想世界",
+          id: '1437485393164901',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/topniniko",
+          "profileName": "翁瑋嬪 Niniko",
+          id: '1780865216',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/venuslin0113/",
+          "profileName": "跟著小V吃喝玩樂",
+          id: '105430266170453',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/LoveColleenWei/",
+          "profileName": "可藍 Colleen wei",
+          id: '100044325011793',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/migaomom",
+          "profileName": "米糕媽媽 x 與兩個老公的生活 蕊秋",
+          id: '393416930830937',
+          docId: 4347196085360470,
+      },
+
+      // 7/3 ~ 7/5 added
+      {
+          "pageUrl": "https://www.facebook.com/takecareofyourknee",
+          "profileName": "膝關節",
+          id: '100044274074089',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/u5u5u5u",
+          "profileName": "肉桂打噴嚏Homemade Kitchen",
+          id: '100044612371429',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/icooktw",
+          "profileName": "iCook 愛料理",
+          id: '227685837266552',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/minamizaleski",
+          "profileName": "K & C 凱勒與夏綠妹",
+          id: '100043987576094',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/shintaroReview",
+          "profileName": "冏冏子Kyon",
+          id: '100044252388413',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/ShaNice1003.tw/",
+          "profileName": "ShaNice食光旅人筆記",
+          id: '358337081463235',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/ethansmomlife",
+          "profileName": "伊森媽咪 × Ethan's mom 親子日常",
+          id: '493450664166120',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/MissTaiwanfriedchicken",
+          "profileName": "顏酥雞小姐的成長日誌",
+          id: '1121575887974452',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yangyoyoblog",
+          "profileName": "環遊世界的小羊兒 （美食旅遊生活）",
+          id: '767399773323379',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Babynina.tw",
+          "profileName": "Nina 瑄寶",
+          id: '868679366617306',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Helensdiary",
+          "profileName": "海倫日記Helen's diary",
+          id: '729433100531623',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/RiinsFL",
+          "profileName": "Riin’s life 好感生活",
+          id: '100045185975264',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/dj.kaihan/",
+          "profileName": "DJ 楊凱涵 Hannah",
+          id: '426903057358032',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/stacey0805",
+          "profileName": "梁太的婚顧生活",
+          id: '100047250031203',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/momojerryplay",
+          "profileName": "Momo姐｜在玩．傑瑞大叔｜再玩",
+          id: '205238703641213',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Komomwithkobe",
+          "profileName": "摳媽與摳比",
+          id: '179030132999619',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yunba8",
+          "profileName": "雲爸的3c學園",
+          id: '414062265302035',
+          docId: 4347196085360470,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/BabyWoodygogogo",
+          "profileName": "寶寶吳迪 Babywoody",
+          id: '100052930634732',
+          docId: 4072975462739051,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/HanHanMurMurShow/",
+          "profileName": "HANNAH小涵X育兒生活X高雄台北美食",
+          id: '903627549651473',
+          docId: 4347196085360470,
+      }
     ],
   }
 
@@ -218,6 +452,29 @@
       feedback: '貼文反饋',
       linksInPost: '貼文內連結',
       messageText: '貼文內容'
+    }
+  }
+
+  class FirebaseUploader {
+    constructor() {
+      this.addScriptToBody();
+      firebase.initializeApp(configs.firebaseConfigs.config);
+      this.database = firebase.database();
+    }
+
+    addScriptToBody() {
+      const coreScript = document.createElement('script');
+      coreScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js');
+      const databaseScript = document.createElement('script');
+      databaseScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js');
+      const body = document.getElementsByTagName('body')[0];
+
+      body.appendChild(coreScript);
+      body.appendChild(databaseScript);
+    }
+
+    uploadData(data) {
+      this.database.ref('crawled-data/').set(data);
     }
   }
 
@@ -251,8 +508,8 @@
       return `# ${storyData.profileName}\n${storyContentStr}`;
     },
 
-    parseStoryDataList(stories=[]) {
-      const parsedContent = stories.map(s => this.convertToMarkdownFormat(s)).join('\n\n');
+    parseStoryDataList(res) {
+      const parsedContent = res.allFetchedFeeds.map(s => this.convertToMarkdownFormat(s)).join('\n\n');
       return `${this.storyMode}\n${parsedContent}`;
     }
   }
@@ -667,22 +924,48 @@
   async function queryFeeds() {
     let allFetchedFeeds = [];
     const creationTime = new Date().toISOString();
+    try {
+      for await (const profile of configs.profiles) {
+        const feedQuerier = new ProfileTimelineFeedQuerier({
+          profileName: profile.profileName,
+          docId: profile.docId,
+          id: profile.id,
+        })
+        const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
+        allFetchedFeeds.push(fetchedFeeds)
+      }
 
-    for await (const profile of configs.profiles) {
-      const feedQuerier = new ProfileTimelineFeedQuerier({
-        profileName: profile.profileName,
-        docId: profile.docId,
-        id: profile.id,
-      })
-      const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
-      allFetchedFeeds.push(fetchedFeeds)
+      // res output
+      return ({
+        creationTime,
+        allFetchedFeeds,
+      });
+    } catch (e) {
+      console.log(e)
     }
-
-    return ({
-      creationTime,
-      allFetchedFeeds,
-    });
   }
+
+  // bin max file size is 100KB :(
+
+  // async function uploadJson(
+  //   binId=configs.jsonBinConfigs.binId, jsonData={}
+  // ) {
+  //   const api = `https://json.extendsclass.com/bin/${binId}`;
+  //   try {
+  //     const res = await fetch(api, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Api-key': configs.jsonBinConfigs.apiKey,
+  //       },
+  //       body: JSON.stringify(jsonData)
+  //     }).then(r => r).then(r => r.json());
+  //     console.log('json data upload successfully.')
+  //     return res.id;
+  //   } catch (e) {
+  //     console.log(e)
+  //     return undefined;
+  //   }
+  // }
 
   queryFeeds()
     .then(res => {
