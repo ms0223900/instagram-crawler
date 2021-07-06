@@ -2,12 +2,18 @@
 (() => {
   const configs = {
     // 每次只要替換form body str即可
-    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw47w5nCxS320om78-221Rwwwg8vy8465o-cwfG12wOKdwGwFyE2ly87e2l2UtG7o4y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7ui7po6iazo&__csr=gb4lkIh9d3sy4SgG224ZTkjPndEHpsBAii8F6GZkjHykiO98h-L8W9hFUyF-GKlerG4t5hszbAJfCV_yqWBDDmrAUPAjF4G-aGjnhHgCbHBBCyWye4-hehaumXGAjKVSAGKECEzAxl7AxeuTgrK-eCBmu4e4Gz99F-i9Cy8Clp6m6ohAhXGqmcKHUCUyeBjCK324VqwzUyi4HzE8UTzUym6bXChoy9wFxCU-48jLDwVBVoihaxi5EozVEW68Ccy8Wu9Uhz8ySV8a8lwyoeqDAGUGE9ogxCuLGiq22u1aABBxC3e0QQ5862q1swAw3gEbUC0mWUc80Dm0v20Io5O3a0mG0iadgjw0Xlw1ina0gQweEgJh1E980F-1Jw5WxW0_84wknzk4E1zo0XW1Hw2YA02_20vOli02CoC&__req=p&__hs=18811.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004076031&__s=54srm8%3Aysiqjl%3A8h232v&__hsi=6980664490628373144-0&__comet_req=1&fb_dtsg=AQF9UQNbRHV9Xt4%3AAQEqlF_6aOWXiJE&jazoest=22480&lsd=9IlMRMy5bvhUNGF3-WBRvd&__spin_r=1004076031&__spin_b=trunk&__spin_t=1625312606&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRfdrZd4rpNDbV_7UrNREpWfZqkcgmI_gAfpxcxOLePlWISzDQxlAGi9Q1RS0d2LclgXF8ywy71WyU_ArQoABUv_7kcrE2-b2lz0JYyP0TR0R3ZCwZvuta_5tLYuU2M9AY%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=3820813564695818',
+    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw2nVEtwMw65xOfwwwto88427Uy11xmfz83WwgEcHzoaEaoG0Boy1PwBgK7o884y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7ui7po6iazo&__csr=g9YQA9hBhYT4LOlPR94Phi9tmCNcOqRQINZFOnWl5HlGyXjEx9-J4l4miKRKqiy5GbBG9DKyeGcEKGjZ4WqLAAV4VoPJAiyEDyd4nBuuaXy8CiiidWFd2GV8OimV-Clqy8GqhaHXZacybBLUiUO5KFkqmimqm8zp4qUybWGp2uaypovxqUCUKKjpKfAyK5oy-S5Xz98lzU9VF99o88GrDKexda6K646UswLxS4EjF3d0zKqdyCl0JgS4p9Qiiq8yEVXAwk9VA5UjAwFgy5UO2m4E9Hho9948Ki10Dx2q2W5Uy8yUfK78-u12wxxnxiawbG2K2K044E0M60re12U1R40pV0oU520MUeA0je016va6E34gbU7HRswy2e0ve0N84y1DwXwdG0m8s05cE3Kw2H402Xy0qedgCS0ctCw&__req=i&__hs=18814.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=GOOD&__rev=1004078508&__s=cfhzjr%3Aohq58r%3A9g3q4g&__hsi=6981816562715379275-0&__comet_req=1&fb_dtsg=AQGJjeoV5IctHAE%3AAQGSgfIxZJ9ja3k&jazoest=22580&lsd=GslIYH72yYmzZFr8Usy08m&__spin_r=1004078508&__spin_b=trunk&__spin_t=1625580844&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRwYTdGD2fSXzRkmJN3e3HlmqL5m3fzBFPymPmFd9BYZPHyuDW4UMgdAbI3gdK5iIV1BPuw45Mp9f6vWxG5akLqb5-sF-GYPfMQMLPzvZH1VtAk8Ve38oyoXk1BUSQe4X_%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=3690328501082342',
     jsonBinConfigs: {
       binId: '',
       apiKey: '',
     },
     firebaseConfigs: {
+      config: {
+        apiKey: FIREBASE_API_KEY,
+        authDomain: 'fb-crawled.firebaseapp.com',
+        databaseURL: 'https://fb-crawled-default-rtdb.firebaseio.com',
+        storageBucket: 'fb-crawled.appspot.com'
+      }
     },
     options: {
       // 總數量為以下數字*3, e.g. 給2 則會找到 6則
@@ -458,23 +464,44 @@
   class FirebaseUploader {
     constructor() {
       this.addScriptToBody();
-      firebase.initializeApp(configs.firebaseConfigs.config);
-      this.database = firebase.database();
+    }
+
+    init() {
+      return new Promise((res, rej) => {
+        setTimeout(() => {
+          const firebase = window.firebase;
+          firebase.initializeApp(configs.firebaseConfigs.config);
+          this.database = firebase.database();
+          console.log('init completed.')
+          return res('init completed.');
+        }, 2000)
+      })
+    }
+
+    checkScriptAdded() {
+      const scripts = document.getElementsByTagName('script');
+      const firebaseScript = [...scripts].find(s => (
+        s.attributes.src?.value === 'https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js'
+      ));
+      return !!firebaseScript;
     }
 
     addScriptToBody() {
-      const coreScript = document.createElement('script');
-      coreScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js');
-      const databaseScript = document.createElement('script');
-      databaseScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js');
-      const body = document.getElementsByTagName('body')[0];
+      if(!this.checkScriptAdded()) {
+        const coreScript = document.createElement('script');
+        coreScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js');
+        const databaseScript = document.createElement('script');
+        databaseScript.setAttribute('src', 'https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js');
+        const body = document.getElementsByTagName('head')[0];
 
-      body.appendChild(coreScript);
-      body.appendChild(databaseScript);
+        body.appendChild(coreScript);
+        body.appendChild(databaseScript);
+      }
     }
 
     uploadData(data) {
       this.database.ref('crawled-data/').set(data);
+      console.log('Data uploaded successfully.')
     }
   }
 
@@ -973,7 +1000,16 @@
         const downloader = new FileDownloader();
         downloader.downloadJsonFile(res);
         downloader.downloadMarkdownFile(res);
+        // FB不能植入script
+        // (async () => {
+        //   const uploader = new FirebaseUploader();
+        //   await uploader.init();
+        //   uploader.uploadData(res);
+        // })()
       }
       console.log(res);
+    })
+    .catch(e => {
+      console.log(e)
     })
 })()
