@@ -9,7 +9,7 @@
     },
     firebaseConfigs: {
       config: {
-        apiKey: FIREBASE_API_KEY,
+        apiKey: '',
         authDomain: 'fb-crawled.firebaseapp.com',
         databaseURL: 'https://fb-crawled-default-rtdb.firebaseio.com',
         storageBucket: 'fb-crawled.appspot.com'
@@ -446,7 +446,134 @@
           "profileName": "HANNAH小涵X育兒生活X高雄台北美食",
           id: '903627549651473',
           docId: 4347196085360470,
-      }
+      },
+
+      {
+          "pageUrl": "https://www.facebook.com/profile.php?id=100063526248425",
+          "profileName": "大公主與三千金的生活記事",
+          id: '100063526248425',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/dearjoy1124",
+          "profileName": "Joy Lee",
+          id: '100044574780084',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yufangkemomo/",
+          "profileName": "Momo 小桃",
+          id: '156298774576046',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/mrjimrsji",
+          "profileName": "吉先生與吉太太的吉霸婚生活",
+          id: '814128585383684',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Janemyhouse/",
+          "profileName": "高個夫妻。Janemy 珍米 House",
+          id: '529940837393462',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Lydia628",
+          "profileName": "Lydia Tsai 蔡沐妍",
+          id: '100044198840961',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/veganlady.iris/",
+          "profileName": "田系女子 Iris",
+          id: '291849705056969',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/lulula",
+          "profileName": "美花的時尚、慢活、輕旅行",
+          id: '100044293126331',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Claire.Diary",
+          "profileName": "Claire's Diary。C妞日記 x 臘腸寶貝 Tila",
+          id: '100044567253505',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yamutsuri",
+          "profileName": "【天啊，拎杯的日本丈夫好靠北】",
+          id: '100044497563745',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/icecreamlovelife",
+          "profileName": "冰淇淋妹 愛生活",
+          id: '100044274961962',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/YJ0428/",
+          "profileName": "汀尼扣 Nicole",
+          id: '310623392421864',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/endlesschenmama2.0",
+          "profileName": "EndlessChenmama。陳媽媽的兒童餐2.0",
+          id: '100044542054688',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/weiweicouple",
+          "profileName": "喂喂卡波",
+          id: '1690259141271341',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/%E9%A3%AF%E5%8C%99%E5%AA%BD%E5%AA%BD%E9%A3%9F%E5%85%89%E6%9C%AD%E8%A8%98-478836762495732/",
+          "profileName": "飯匙媽媽。食光札記",
+          id: '478836762495732',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/jubbyfan/",
+          "profileName": "林小乖的養成計畫",
+          id: '1242892389105197',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/pisces.sister/",
+          "profileName": "雙魚姊姊美食旅遊",
+          id: '383173185125512',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/banana065",
+          "profileName": "香蕉太太MrsBanana",
+          id: '100044229169602',
+          docId: 3514278682008910,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Host.kiki/",
+          "profileName": "Dj琦琦-醫師娘陪你當媽媽",
+          id: '168519849855368',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/Summer.pace17/",
+          "profileName": "Summer 沙莫太太",
+          id: '254099902047279',
+          docId: 3805022272943106,
+      },
+      {
+          "pageUrl": "https://www.facebook.com/yunimama.Ali/",
+          "profileName": "婗媽。甜栗子",
+          id: '1402176656508704',
+          docId: 3805022272943106,
+      },
     ],
   }
 
