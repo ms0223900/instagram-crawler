@@ -711,6 +711,11 @@
   }
 
   const StoryDataExtracter = {
+    getStoryId: (story) => {
+      const id = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.subscription_target_id;
+      return id;
+    },
+
     getStoryMetaData: (story) => {
       return story.node.comet_sections.context_layout.story.comet_sections.metadata;
     },
@@ -789,6 +794,7 @@
     },
 
     extractSingleStory(storyData) {
+      const id = this.getStoryId(storyData)
       const creationTime = this.getCreationTime(storyData);
       const storyMessageText = this.getStoryMessageText(storyData);
       const links = this.getLinksFromMessageTxt(storyMessageText.text);
@@ -799,6 +805,7 @@
       const metaOptions = this.getMetaOptions(links, creationTime.creationTimeMs)
 
       return ({
+        id,
         metaOptions,
         postLink,
         // attachments: configs.options.isDev ? attachments : undefined,
