@@ -2,7 +2,7 @@
 (() => {
   const configs = {
     // 每次只要替換form body str即可
-    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw2nVEtwMw65xOfwwwto88427Uy11xmfz83WwgEcHzoaEaoG0Boy1PwBgK7o884y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W3y1MBwxy88EbUbE7ui7po6iazo&__csr=g9YQA9hBhYT4LOlPR94Phi9tmCNcOqRQINZFOnWl5HlGyXjEx9-J4l4miKRKqiy5GbBG9DKyeGcEKGjZ4WqLAAV4VoPJAiyEDyd4nBuuaXy8CiiidWFd2GV8OimV-Clqy8GqhaHXZacybBLUiUO5KFkqmimqm8zp4qUybWGp2uaypovxqUCUKKjpKfAyK5oy-S5Xz98lzU9VF99o88GrDKexda6K646UswLxS4EjF3d0zKqdyCl0JgS4p9Qiiq8yEVXAwk9VA5UjAwFgy5UO2m4E9Hho9948Ki10Dx2q2W5Uy8yUfK78-u12wxxnxiawbG2K2K044E0M60re12U1R40pV0oU520MUeA0je016va6E34gbU7HRswy2e0ve0N84y1DwXwdG0m8s05cE3Kw2H402Xy0qedgCS0ctCw&__req=i&__hs=18814.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=GOOD&__rev=1004078508&__s=cfhzjr%3Aohq58r%3A9g3q4g&__hsi=6981816562715379275-0&__comet_req=1&fb_dtsg=AQGJjeoV5IctHAE%3AAQGSgfIxZJ9ja3k&jazoest=22580&lsd=GslIYH72yYmzZFr8Usy08m&__spin_r=1004078508&__spin_b=trunk&__spin_t=1625580844&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRwYTdGD2fSXzRkmJN3e3HlmqL5m3fzBFPymPmFd9BYZPHyuDW4UMgdAbI3gdK5iIV1BPuw45Mp9f6vWxG5akLqb5-sF-GYPfMQMLPzvZH1VtAk8Ve38oyoXk1BUSQe4X_%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=3690328501082342',
+    defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84ibyQdwSwAyU8EW0CEboG4E6icwJwpUe8hw2nVEtwMw65xOfwwwto88427Uy11xmfz83WwgEcHzoaEaoG0Boy1PwBgK7o884y0Mo4G4UcUC68f85qfK6E7e58jwGzEaE5e7oqBwJK5Umxm5oe8aUlxfxmu3W2i4U72m268wywLwKwtU8FobodEGdwb6&__csr=gc44jONcPb7b9iqkYbNWPhJvHdkAjQZil9MFjG-pfWl9vtRiKWZP3aRWCGrnFbXGleFkAFfmGhULiXqy4qsyGLV9bvKFoGiQdQgyy4qaykKniWA_Kp6gFaqLQEjGnzEBtHQF449HUOrGQfA-iim_payp8CvDyXxaHUriDCy46rGXzUkxC6HVFUW9GKmdWBzUGry8-cwRx2iECFFVGx6mfqBKq8yGKmF8lwwzoSuiquu211yu2Ty8yUV6KdGfyJ0KzEy8wwyoxx278-VaK5GykeAAFxW7uUC3m68kxeczopACxm58G6Z1GqcKcK6o5d2Vk2K2-q2de6U4W3e542W1ewzwmo4a5Ueo0By0fiw4eCU15o0Buax-q0Yk2Weg1KUaE3jw0YjwTw1mW3e1vg4O4qaUyba0Yp61-w2jo2cU1CU3yK0R8bFC6x9Q9CwfG0jy0e3w2983WU5a02FLwai5u0he0X88Q2qc8&__req=k&__hs=18835.EXP2%3Acomet_pkg.2.1.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004163323&__s=2ypfqz%3Azy6y3e%3Aneqk9j&__hsi=6989639691951409717-0&__comet_req=1&fb_dtsg=AQE1fjFSTsIe5X0%3A33%3A1553618719&jazoest=21931&lsd=QyLq_dOpTs7_Y5xqw-0BJh&__spin_r=1004163323&__spin_b=trunk&__spin_t=1627402308&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHRHZYYb-lC8T_JZ-jOEv_PxjTxHfmO9NlrsB5gEAuXLl8WLIlnQCeMPAh_ftxlmxSv5Gx6bGK_ExpWuQBNOzedCe4NQm9Dm8RVGRhYJiYKIijO43XuCXQEqww0jVIcWw4d%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3Anull%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=3689856891115778',
     jsonBinConfigs: {
       binId: '',
       apiKey: '',
@@ -16,6 +16,7 @@
       }
     },
     options: {
+      latestStoriesDaysAmount: 7,
       // 總數量為以下數字*3, e.g. 給2 則會找到 6則
       defaultFetchFeedsAmount: 2,
       // dev會保留fetchedStories等等的原始資料
@@ -841,7 +842,8 @@
 
     extractStories(stories=[]) {      
       const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
-      const filteredExtractedStories = this.filterExtractedStoriesWithMetaOptions([...extractedStories]);
+      let filteredExtractedStories = this.filterExtractedStoriesWithMetaOptions([...extractedStories]);
+      filteredExtractedStories = this.filterStoriesByDaysAmountBetweenCreationTime(filteredExtractedStories)
       return ({
         extractedStories,
         filteredExtractedStories,
@@ -889,6 +891,13 @@
     filterExtractedStoriesWithMetaOptions(extractedStories=[]) {
       return extractedStories.filter(s => (
         s.metaOptions.isToday && s.metaOptions.haveLinks
+      ))
+    },
+    filterStoriesByDaysAmountBetweenCreationTime(extractedStories=[]) {
+      const nowMs = new Date().getTime()
+      const daysAmountBetweenCreationTimeMs = configs.options.latestStoriesDaysAmount * 24 * 60 * 60 * 1000
+      return extractedStories.filter(s => (
+        (nowMs - s.creationTime.creationTimeMs) <= daysAmountBetweenCreationTimeMs
       ))
     },
 
