@@ -841,9 +841,9 @@
     },
 
     extractStories(stories=[]) {      
-      const extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
+      let extractedStories = stories.map(s => StoryDataExtracter.extractSingleStory(s));
+      extractedStories = this.filterStoriesByDaysAmountBetweenCreationTime(extractedStories)
       let filteredExtractedStories = this.filterExtractedStoriesWithMetaOptions([...extractedStories]);
-      filteredExtractedStories = this.filterStoriesByDaysAmountBetweenCreationTime(filteredExtractedStories)
       return ({
         extractedStories,
         filteredExtractedStories,
