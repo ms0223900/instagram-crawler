@@ -1,6 +1,7 @@
 // const fetch = require('node-fetch')
 
 const extendedProfileListDataLSKey = 'EXTENDED_PROFILE_LIST_DATA';
+
 const makeSingleProfileConfigFromFormData = ({
   formDataStr = '', // 剛剛從標頭複製來的那一長串文字
   profileName = '', // 粉絲專頁名稱
@@ -41,14 +42,25 @@ const appendProfileDataToLSData = (profileData = {}) => {
 const extendNewProfileData = (options) => {
   const profileData = makeSingleProfileConfigFromFormData(options);
   appendProfileDataToLSData(profileData);
+  console.log(options.profileName + ' added successfully :)')
 }
 
-(() => {
-  const getExtendedProfileDataFromLS = () => {
-    const dataFromLS = localStorage.getItem(extendedProfileListDataLSKey);
-    const parsedProfileDataFromLS = dataFromLS ? JSON.parse(dataFromLS) : [];
-    return parsedProfileDataFromLS
+(async () => {
+  // const getExtendedProfileDataFromLS = () => {
+  //   const dataFromLS = localStorage.getItem(extendedProfileListDataLSKey);
+  //   const parsedProfileDataFromLS = dataFromLS ? JSON.parse(dataFromLS) : [];
+  //   return parsedProfileDataFromLS
+  // }
+  const asyncGetExtendedProfileListFromIndexedDB = async () => {
+    if(!window.myIndexedDB) {
+      console.log('Please init "addProfileToIndexedDB" file.')
+      return [];
+    }
+    const res = await window.myIndexedDB.readAllData()
+    return res
   }
+
+  const extendProfileListData = await asyncGetExtendedProfileListFromIndexedDB()
   
   const configs = {
     // 每次只要替換form body str即可
@@ -80,7 +92,7 @@ const extendNewProfileData = (options) => {
       URL: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
     },
     profiles: [
-      ...getExtendedProfileDataFromLS(),
+      ...extendProfileListData,
       {
         profileName: '德州媽媽沒有崩潰',
         pageUrl: 'https://www.facebook.com/mumumamagogo',
