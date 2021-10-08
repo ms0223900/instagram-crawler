@@ -1,56 +1,6 @@
 // const fetch = require('node-fetch')
 
-const extendedProfileListDataLSKey = 'EXTENDED_PROFILE_LIST_DATA';
-
-const makeSingleProfileConfigFromFormData = ({
-  formDataStr = '', // 剛剛從標頭複製來的那一長串文字
-  profileName = '', // 粉絲專頁名稱
-  pageUrl = '', // 粉絲專頁連結
-}) => {
-  const matched = formDataStr.match(/((doc_id\=.+|(%22id%22%3A%22)(.+)%22))/g);
-  
-  if(matched) {
-    const originIdStr = matched.find(t => t.includes('%22'));
-    const originDocIdStr = matched.find(t => t.includes('doc_id'));
-
-    const id = originIdStr.replace(/%22|%3A|id/g, '')
-    const docId = originDocIdStr.replace(/doc_id=/g, '')
-
-    return ({
-      profileName,
-      pageUrl,
-      id,
-      docId: Number(docId),
-    })
-  }
-  return undefined
-}
-
-const getExtendedProfileDataFromLS = () => {
-  const dataFromLS = localStorage.getItem(extendedProfileListDataLSKey);
-  const parsedProfileDataFromLS = dataFromLS ? JSON.parse(dataFromLS) : [];
-  return parsedProfileDataFromLS
-}
-const appendProfileDataToLSData = (profileData = {}) => {
-  if(profileData) {
-    const parsedProfileDataFromLS = getExtendedProfileDataFromLS()
-    const res = [...parsedProfileDataFromLS, profileData];
-    localStorage.setItem(extendedProfileListDataLSKey, JSON.stringify(res))
-  }
-}
-
-const extendNewProfileData = (options) => {
-  const profileData = makeSingleProfileConfigFromFormData(options);
-  appendProfileDataToLSData(profileData);
-  console.log(options.profileName + ' added successfully :)')
-}
-
 (async () => {
-  // const getExtendedProfileDataFromLS = () => {
-  //   const dataFromLS = localStorage.getItem(extendedProfileListDataLSKey);
-  //   const parsedProfileDataFromLS = dataFromLS ? JSON.parse(dataFromLS) : [];
-  //   return parsedProfileDataFromLS
-  // }
   const asyncGetExtendedProfileListFromIndexedDB = async () => {
     if(!window.myIndexedDB) {
       console.log('Please init "addProfileToIndexedDB" file.')
@@ -60,11 +10,32 @@ const extendNewProfileData = (options) => {
     return res
   }
 
-  const extendProfileListData = await asyncGetExtendedProfileListFromIndexedDB()
+  const asyncGetBodyStr = async () => {
+    if(!window.formbodyStrIndexedDB) {
+      console.log('Please init "MyIndexedDB" first');
+      return ''
+    }
+
+    const res = await window.formbodyStrIndexedDB.readAllData();
+    if(!res.length) {
+      console.log('Please update formBodyStr first :)')
+      return ''
+    }
+    return res[0].formBodyStr;
+  }
+
+  const extendProfileListData = await asyncGetExtendedProfileListFromIndexedDB();
+  const formBodyStr = await asyncGetBodyStr();
+
+  if(!formBodyStr) {
+    console.log('Please add form body str first!!!');
+    console.log(`Enter this page ${'https://www.facebook.com/thelinskids'} to get form body str :)`)
+    return;
+  }
   
   const configs = {
     // 每次只要替換form body str即可
-    defaultFormBodyStr: localStorage.getItem('FB_FORM_BODY_STR'),
+    defaultFormBodyStr: formBodyStr,
     // defaultFormBodyStr: 'av=100000107785615&__user=100000107785615&__a=1&__dyn=7AzHxqU5a5Q1ryaxG4VuC0BVU98nwgUb84i5QdwSwAyU8EW0CEboG4E762S1DwUx609vCxS320om78-221Rwwwg8vy8465o-cwfG12wOKdwGwFyE2ly87e2l2Utwwwi831wiEjwPyoowYwlE-UqwsUkxe2GewGwkUtxGm2SUnxq5olwUwgojUlDw-wUws9o8oy2a2-0FE8Fo6iazo2NwwwOg&__csr=g922islN58tOR4h4QgBkaiq9ZYIjjlJ-zOHmAJAAAKGWArVbvjt35FZ6GWp9Tya-r8V45pifFtaK-UjUy_J-eWUVmECmibyAl7y94F7F4G5A9V9FdeungFami9VKuhWG48yF8Z3uleiagCi9Km8AyJ5UXVe9BDzESbmGzXgmybyoC4U99F8WEprDJ12quaUKaCyoIw88Smi9xGm9hUSfypVrwDyFFbxqeK4obocXxeF99Xyox6ypbXxGdyoWES4ovgW36Eao8FA3uUa999UZohxm6aKp2oK8z8a99Eco8FEf8O7em17G68qwLg5m4EW9xy22V8swJxO68txa2m3S02ky1Qw159026Q0UdwSg05sZ0bBaKz11xa0MKE0za0rG1Gw2Lo1Y5ojwyw51xi2C3m1BDyrm0oO9CwFbVayF49w6_w0KcwPy8vw43dDw18d1F053yo&__req=i&__hs=18886.EXP2%3Acomet_pkg.2.1.0.0.0&dpr=1.5&__ccg=EXCELLENT&__rev=1004405568&__s=wxyars%3Akwsxmf%3Ahlh6z8&__hsi=7008556544619121267-0&__comet_req=1&fb_dtsg=AQGqfAD-mo4P7TQ%3A33%3A1553618719&jazoest=21926&lsd=tv32wzt_Eeu8ZJiFQv7UAz&__spin_r=1004405568&__spin_b=trunk&__spin_t=1631806731&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=ProfileCometTimelineFeedRefetchQuery&variables=%7B%22UFI2CommentsProvider_commentsKey%22%3A%22ProfileCometTimelineRoute%22%2C%22afterTime%22%3Anull%2C%22beforeTime%22%3Anull%2C%22count%22%3A3%2C%22cursor%22%3A%22AQHR-mCxHeUky1fMrVTsz1Hh9D3IQte52BOdPaIf8MOADL43KAmLxXux3lBgbd2sg2BLPn2deLc16waX69twrqPlpRp4SdSv1-tNltsyI3asfU9OuokWTQLmWEi-H2EaP7BY%22%2C%22displayCommentsContextEnableComment%22%3Anull%2C%22displayCommentsContextIsAdPreview%22%3Anull%2C%22displayCommentsContextIsAggregatedShare%22%3Anull%2C%22displayCommentsContextIsStorySet%22%3Anull%2C%22displayCommentsFeedbackContext%22%3Anull%2C%22feedLocation%22%3A%22TIMELINE%22%2C%22feedbackSource%22%3A0%2C%22focusCommentID%22%3Anull%2C%22memorializedSplitTimeFilter%22%3Anull%2C%22omitPinnedPost%22%3Atrue%2C%22postedBy%22%3A%7B%22group%22%3A%22OWNER%22%7D%2C%22privacy%22%3Anull%2C%22privacySelectorRenderLocation%22%3A%22COMET_STREAM%22%2C%22renderLocation%22%3A%22timeline%22%2C%22scale%22%3A1.5%2C%22should_show_profile_pinned_post%22%3Atrue%2C%22stream_count%22%3A1%2C%22taggedInOnly%22%3Anull%2C%22useDefaultActor%22%3Afalse%2C%22id%22%3A%22100050607693965%22%7D&server_timestamps=true&doc_id=4345796105515300',
     jsonBinConfigs: {
       binId: '',
@@ -776,8 +747,12 @@ const extendNewProfileData = (options) => {
   }
 
   const StoryDataExtracter = {
-    getStoryId: (story) => {
-      const id = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.subscription_target_id;
+    getFeedbackContext: (story) => (
+      story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context
+    ),
+
+    getStoryId(story) {
+      const id = this.getFeedbackContext(story).subscription_target_id;
       return id;
     },
 
@@ -806,8 +781,10 @@ const extendNewProfileData = (options) => {
       story.node.comet_sections.content.story.attachments
     ),
 
-    getStoryFeedback: (story) => {
-      const feedback = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context.comet_ufi_summary_and_actions_renderer.feedback
+    getStoryFeedback(story) {
+      const feedbackCtx = this.getFeedbackContext(story)
+      // console.log(feedbackCtx)
+      const feedback = (feedbackCtx.comet_ufi_summary_and_actions_renderer || feedbackCtx.ufi_renderer.feedback.comet_ufi_summary_and_actions_renderer).feedback
       const reactionCount = feedback.reaction_count.count;
       const shareCount = feedback.share_count.count;
       return ({
@@ -817,8 +794,8 @@ const extendNewProfileData = (options) => {
       })
     },
 
-    getStoryComments: (story) => {
-      const feedbackCtx = story.node.comet_sections.feedback.story.feedback_context.feedback_target_with_context;
+    getStoryComments(story) {
+      const feedbackCtx = this.getFeedbackContext(story);
       const comments = feedbackCtx.display_comments;
       return comments;
     },
@@ -1156,27 +1133,32 @@ const extendNewProfileData = (options) => {
   }
 
   async function queryFeeds() {
+    let somethingFailed = false
     let allFetchedFeeds = [];
     const creationTime = new Date().toISOString();
-    try {
-      for await (const profile of configs.profiles) {
-        const feedQuerier = new ProfileTimelineFeedQuerier({
-          profileName: profile.profileName,
-          docId: profile.docId,
-          id: profile.id,
-        })
-        const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
-        allFetchedFeeds.push(fetchedFeeds)
+    for await (const profile of configs.profiles) {
+      try {
+        if(!somethingFailed) {
+          console.log(`Querying: ${profile.profileName}`)
+          const feedQuerier = new ProfileTimelineFeedQuerier({
+            profileName: profile.profileName,
+            docId: profile.docId,
+            id: profile.id,
+          })
+          const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
+          allFetchedFeeds.push(fetchedFeeds)
+        }
+      } catch (error) {
+        console.log(`Query feed error: ${error}`);
+        return;
       }
-
-      // res output
-      return ({
-        creationTime,
-        allFetchedFeeds,
-      });
-    } catch (e) {
-      console.log(e)
     }
+
+    // res output
+    return ({
+      creationTime,
+      allFetchedFeeds,
+    });
   }
 
   // bin max file size is 100KB :(
@@ -1217,6 +1199,6 @@ const extendNewProfileData = (options) => {
       console.log(res);
     })
     .catch(e => {
-      console.log(e)
+      console.log(e);
     })
 })()
