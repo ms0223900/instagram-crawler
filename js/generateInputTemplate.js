@@ -427,6 +427,8 @@
       FormEl.root,
       renderProfileList(),
     ]
+    const FormAndListRoot = document.createElement('div');
+    FormAndListRoot.className = 'form-and-list--wrapper';
     
     elements.forEach(el => {
       document.body.appendChild(
