@@ -310,7 +310,8 @@
             console.log(res);
             const addedStatus = {
               type: 200,
-              message: `New profile added :)`
+              message: `New profile added :)`,
+              newData: singleProfileData,
             }
             console.log(addedStatus.message)
             // return res;
@@ -347,7 +348,8 @@
         console.log(res);
         const successStatus = {
           type: 200,
-          message: 'FormbodyStr is updated done :)'
+          message: 'FormbodyStr is updated done :)',
+          newData: formBodyStr
         }
         console.log(successStatus.message)
         return successStatus;

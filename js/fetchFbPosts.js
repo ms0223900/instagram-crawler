@@ -1,6 +1,4 @@
-// const fetch = require('node-fetch')
-
-(async () => {
+const initFbQuery = async () => {
   const asyncGetExtendedProfileListFromIndexedDB = async () => {
     if(!window.myIndexedDB) {
       console.log('Please init "addProfileToIndexedDB" file.')
@@ -1133,10 +1131,13 @@
   }
 
   async function queryFeeds() {
+    let i = 0;
     let somethingFailed = false
     let allFetchedFeeds = [];
     const creationTime = new Date().toISOString();
+
     for await (const profile of configs.profiles) {
+      i++;
       try {
         if(!somethingFailed) {
           console.log(`Querying: ${profile.profileName}`)
@@ -1145,7 +1146,16 @@
             docId: profile.docId,
             id: profile.id,
           })
-          const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount)
+          const fetchedFeeds = await feedQuerier.queryFeeds(configs.options.defaultFetchFeedsAmount);
+
+          if(window.ctx) {
+            const queriedPostsPercentage = Math.floor(
+              (i / configs.profiles.length) * 100
+            )
+            window.ctx.setState(s => ({
+              queriedPostsPercentage,
+            }))
+          }
           allFetchedFeeds.push(fetchedFeeds)
         }
       } catch (error) {
@@ -1183,22 +1193,17 @@
   //   }
   // }
 
-  queryFeeds()
-    .then(res => {
-      if(res) {
+  window.queryFbPosts = async () => {
+    try {
+      const queriedFeeds = await queryFeeds();
+      if(queriedFeeds) {
         const downloader = new FileDownloader();
-        downloader.downloadJsonFile(res);
-        downloader.downloadMarkdownFile(res);
-        // FB不能植入script
-        // (async () => {
-        //   const uploader = new FirebaseUploader();
-        //   await uploader.init();
-        //   uploader.uploadData(res);
-        // })()
+        downloader.downloadJsonFile(queriedFeeds);
+        downloader.downloadMarkdownFile(queriedFeeds);
       }
-      console.log(res);
-    })
-    .catch(e => {
+    } catch (error) {
       console.log(e);
-    })
-})()
+    }
+  }
+};
+initFbQuery();
