@@ -395,8 +395,13 @@
         console.log('Please init "addProfileToIndexedDB" file.')
         return [];
       }
-      const res = await window.myIndexedDB.readAllData()
-      return res
+      try {
+        const res = await window.myIndexedDB.readAllData()
+        return res
+      } catch (error) {
+        console.log(error)
+        return [];
+      }
     }
 
     const asyncGetBodyStr = async () => {

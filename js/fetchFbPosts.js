@@ -3,9 +3,14 @@ const initFbQuery = async () => {
     if(!window.myIndexedDB) {
       console.log('Please init "addProfileToIndexedDB" file.')
       return [];
+    };
+    try {
+      const res = await window.myIndexedDB.readAllData()
+      return res
+    } catch (error) {
+      console.log(error)
+      return [];
     }
-    const res = await window.myIndexedDB.readAllData()
-    return res
   }
 
   const asyncGetBodyStr = async () => {
